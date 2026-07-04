@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}ATS Resume Builder - Optimumkan Peluang Pekerjaan Anda{% endblock %}
+
+{% block content %}
+<div class="relative isolate overflow-hidden flex flex-col justify-center items-center py-20 px-6 sm:py-32 lg:px-8">
+    <!-- Glowing background elements -->
+    <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+        <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-brand-600 to-indigo-600 opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
+    </div>
+    
+    <div class="mx-auto max-w-3xl text-center">
+        <div class="inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-3 py-1 text-xs font-semibold text-brand-400 mb-6">
+            <span class="flex h-2 w-2 rounded-full bg-brand-400 animate-pulse"></span>
+            100% Mesra Parser ATS Global & Tempatan
+        </div>
+        
+        <h1 class="font-outfit text-4xl font-extrabold tracking-tight text-white sm:text-6xl">
+            Bina Resume Pintar yang <span class="bg-gradient-to-r from-brand-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">Melepasi Tapisan ATS</span>
+        </h1>
+        <p class="mt-6 text-lg leading-8 text-slate-400 max-w-xl mx-auto">
+            Hentikan penggunaan template grafik berwarna-warni yang merosakkan peluang anda. Jana resume profesional berasaskan teks bersih yang dioptimumkan secara algoritma untuk sistem HR moden.
+        </p>
+        
+        <div class="mt-10 flex items-center justify-center gap-x-6">
+            {% if session.get('user_id') %}
+                <a href="{{ url_for('dashboard' if session['role'] == 'user' else 'admin_dashboard') }}" class="rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-brand-500/20 hover:from-brand-500 hover:to-indigo-500 hover:shadow-brand-500/35 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600">
+                    Masuk ke Dashboard
+                </a>
+            {% else %}
+                <a href="{{ url_for('register') }}" class="rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-brand-500/20 hover:from-brand-500 hover:to-indigo-500 hover:shadow-brand-500/35 transition">
+                    Mula Bina Sekarang (Percuma)
+                </a>
+                <a href="{{ url_for('login') }}" class="text-sm font-semibold leading-6 text-white hover:text-brand-400 transition">
+                    Log Masuk Pengguna <span aria-hidden="true">→</span>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Feature Section -->
+    <div class="mx-auto mt-24 max-w-7xl px-6 lg:px-8 w-full">
+        <div class="mx-auto max-w-2xl lg:text-center">
+            <h2 class="font-outfit text-base font-semibold leading-7 text-brand-400">Ciri-ciri Utama</h2>
+            <p class="mt-2 font-outfit text-3xl font-bold tracking-tight text-white sm:text-4xl">Mengapa ATS Resume Builder Berbeza?</p>
+        </div>
+        
+        <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+            <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+                <!-- Feature 1 -->
+                <div class="flex flex-col rounded-2xl border border-slate-800 bg-slate-900/50 p-8 backdrop-blur-sm">
+                    <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-white">
+                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-600">
+                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                        Pengepalan Teks 100% Sah
+                    </dt>
+                    <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-slate-400">
+                        <p class="flex-auto">Menjana PDF digital berasaskan teks vektor sebenar. Bot ATS parser boleh membaca, mengimbas dan merekod maklumat anda dengan tepat tanpa gangguan.</p>
+                    </dd>
+                </div>
+                <!-- Feature 2 -->
+                <div class="flex flex-col rounded-2xl border border-slate-800 bg-slate-900/50 p-8 backdrop-blur-sm">
+                    <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-white">
+                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
+                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                        </div>
+                        Struktur & Skema Selamat
+                    </dt>
+                    <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-slate-400">
+                        <p class="flex-auto">Pendaftaran berasingan untuk Pengguna dan Admin. Rekod dilindungi menggunakan kata laluan terenkripsi dan token sesi HTTP-Only.</p>
+                    </dd>
+                </div>
+                <!-- Feature 3 -->
+                <div class="flex flex-col rounded-2xl border border-slate-800 bg-slate-900/50 p-8 backdrop-blur-sm">
+                    <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-white">
+                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-600">
+                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        Booster & Validasi Pintar
+                    </dt>
+                    <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-slate-400">
+                        <p class="flex-auto">Mengandungi validasi format IC (Kad Pengenalan) wajib Malaysia, input kronologi terbalik, kata kunci kemahiran, dan penukaran susun atur mesra cetak secara automatik.</p>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    
+    <!-- Account seeding info for easy testing -->
+    <div class="mx-auto mt-20 max-w-xl rounded-2xl border border-slate-800 bg-slate-900/40 p-6 text-center text-xs text-slate-400">
+        <h4 class="font-semibold text-slate-200 mb-2">Akaun Contoh Ujian Sedia Ada (Database Seeding):</h4>
+        <div class="grid grid-cols-2 gap-4 text-left">
+            <div class="p-3 bg-slate-950/50 rounded-lg">
+                <span class="font-bold text-brand-400">Peranan: User</span><br>
+                Username: <code class="text-white">user</code><br>
+                Password: <code class="text-white">user123</code>
+            </div>
+            <div class="p-3 bg-slate-950/50 rounded-lg">
+                <span class="font-bold text-purple-400">Peranan: Admin</span><br>
+                Username: <code class="text-white">admin</code><br>
+                Password: <code class="text-white">admin123</code>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

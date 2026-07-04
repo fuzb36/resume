@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %}Pendaftaran Akaun - ATS Resume Builder{% endblock %}
+
+{% block content %}
+<div class="flex min-h-[80vh] flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+    <!-- Glowing background blur -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-72 w-72 rounded-full bg-brand-500/10 blur-3xl"></div>
+    
+    <div class="sm:mx-auto w-full max-w-md">
+        <h2 class="mt-6 text-center font-outfit text-3xl font-extrabold tracking-tight text-white">
+            Daftar Akaun Baru
+        </h2>
+        <p class="mt-2 text-center text-sm text-slate-400">
+            Dah ada akaun?
+            <a href="{{ url_for('login') }}" class="font-semibold text-brand-400 hover:text-brand-300 transition">
+                log masuk di sini
+            </a>
+        </p>
+    </div>
+
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="border border-slate-800 bg-slate-900/60 backdrop-blur-md px-6 py-8 shadow-xl rounded-2xl sm:px-10">
+            <form class="space-y-6" action="{{ url_for('register') }}" method="POST">
+                
+                <div>
+                    <label for="username" class="block text-sm font-medium text-slate-300">
+                        Nama Pengguna
+                    </label>
+                    <div class="mt-1">
+                        <input id="username" name="username" type="text" required
+                            class="block w-full rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-white placeholder-slate-500 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 text-sm transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-slate-300">
+                        Alamat E-mel
+                    </label>
+                    <div class="mt-1">
+                        <input id="email" name="email" type="email" required
+                            class="block w-full rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-white placeholder-slate-500 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 text-sm transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-slate-300">
+                        Kata Laluan
+                    </label>
+                    <div class="mt-1">
+                        <input id="password" name="password" type="password" required
+                            class="block w-full rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-white placeholder-slate-500 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 text-sm transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="role" class="block text-sm font-medium text-slate-300 mb-2">
+                        Peranan Akaun (Demo Role Selection)
+                    </label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="relative flex cursor-pointer rounded-xl border border-slate-700 bg-slate-800/50 p-4 shadow-sm focus:outline-none hover:border-slate-600 transition">
+                            <input type="radio" name="role" value="user" checked class="sr-only" id="role-user">
+                            <div class="flex flex-col">
+                                <span id="user-label" class="block text-sm font-bold text-white">User</span>
+                                <span id="user-desc" class="mt-1 flex items-center text-xs text-slate-400">Bina resume anda</span>
+                            </div>
+                        </label>
+                        <label class="relative flex cursor-pointer rounded-xl border border-slate-700 bg-slate-800/50 p-4 shadow-sm focus:outline-none hover:border-slate-600 transition">
+                            <input type="radio" name="role" value="admin" class="sr-only" id="role-admin">
+                            <div class="flex flex-col">
+                                <span id="admin-label" class="block text-sm font-bold text-white">Admin</span>
+                                <span id="admin-desc" class="mt-1 flex items-center text-xs text-slate-400">Uruskan semua resume</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit"
+                        class="flex w-full justify-center rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-brand-500/10 hover:from-brand-500 hover:to-indigo-500 hover:shadow-brand-500/20 transition">
+                        Daftar Akaun
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Javascript ringkas untuk memberikan kesan visual peranan terpilih
+    const roleUser = document.getElementById('role-user');
+    const roleAdmin = document.getElementById('role-admin');
+    
+    function updateBorders() {
+        const userContainer = roleUser.closest('label');
+        const adminContainer = roleAdmin.closest('label');
+        
+        if (roleUser.checked) {
+            userContainer.classList.add('border-brand-500', 'ring-2', 'ring-brand-500/20');
+            userContainer.classList.remove('border-slate-700');
+            adminContainer.classList.remove('border-brand-500', 'ring-2', 'ring-brand-500/20');
+            adminContainer.classList.add('border-slate-700');
+        } else {
+            adminContainer.classList.add('border-brand-500', 'ring-2', 'ring-brand-500/20');
+            adminContainer.classList.remove('border-slate-700');
+            userContainer.classList.remove('border-brand-500', 'ring-2', 'ring-brand-500/20');
+            userContainer.classList.add('border-slate-700');
+        }
+    }
+    
+    roleUser.addEventListener('change', updateBorders);
+    roleAdmin.addEventListener('change', updateBorders);
+    updateBorders();
+</script>
+{% endblock %}

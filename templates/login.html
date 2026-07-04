@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Log Masuk - ATS Resume Builder{% endblock %}
+
+{% block content %}
+<div class="flex min-h-[80vh] flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+    <!-- Glowing background blur -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-72 w-72 rounded-full bg-brand-500/10 blur-3xl"></div>
+    
+    <div class="sm:mx-auto w-full max-w-md">
+        <h2 class="mt-6 text-center font-outfit text-3xl font-extrabold tracking-tight text-white">
+            Log Masuk Akaun Anda
+        </h2>
+        <p class="mt-2 text-center text-sm text-slate-400">
+            Atau
+            <a href="{{ url_for('register') }}" class="font-semibold text-brand-400 hover:text-brand-300 transition">
+                daftar akaun baharu di sini
+            </a>
+        </p>
+    </div>
+
+    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div class="border border-slate-800 bg-slate-900/60 backdrop-blur-md px-6 py-8 shadow-xl rounded-2xl sm:px-10">
+            <form class="space-y-6" action="{{ url_for('login') }}" method="POST">
+                
+                <div>
+                    <label for="username" class="block text-sm font-medium text-slate-300">
+                        Nama Pengguna
+                    </label>
+                    <div class="mt-1">
+                        <input id="username" name="username" type="text" autocomplete="username" required
+                            class="block w-full rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-white placeholder-slate-500 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 text-sm transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-slate-300">
+                        Kata Laluan
+                    </label>
+                    <div class="mt-1">
+                        <input id="password" name="password" type="password" autocomplete="current-password" required
+                            class="block w-full rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-white placeholder-slate-500 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 text-sm transition">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit"
+                        class="flex w-full justify-center rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-brand-500/10 hover:from-brand-500 hover:to-indigo-500 hover:shadow-brand-500/20 transition focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-slate-900">
+                        Log Masuk
+                    </button>
+                </div>
+            </form>
+
+            <!-- Test Accounts Hint -->
+            <div class="mt-8 border-t border-slate-800 pt-6">
+                <p class="text-xs text-slate-500 text-center mb-3">Gunakan akaun contoh untuk mencuba dengan cepat:</p>
+                <div class="grid grid-cols-2 gap-3 text-xs">
+                    <div class="bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/50">
+                        <span class="font-bold text-brand-400">Akaun Pengguna:</span><br>
+                        Username: <code class="text-slate-300">user</code><br>
+                        Password: <code class="text-slate-300">user123</code>
+                    </div>
+                    <div class="bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/50">
+                        <span class="font-bold text-purple-400">Akaun Admin:</span><br>
+                        Username: <code class="text-slate-300">admin</code><br>
+                        Password: <code class="text-slate-300">admin123</code>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

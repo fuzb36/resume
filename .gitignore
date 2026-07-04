@@ -1,0 +1,17 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Databases
+*.db
+*.sqlite3
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# Snapshots
+.snapshots/
+.idea/
+.vscode/

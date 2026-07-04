@@ -1,0 +1,89 @@
+/* Custom styling for ATS Resume Builder */
+
+body {
+    background-color: #030712; /* Tailwind bg-slate-950 */
+    font-family: 'Inter', sans-serif;
+}
+
+/* Hide scrollbar of forms but allow scroll */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Custom visual highlights */
+.glow-orb {
+    filter: blur(100px);
+    pointer-events: none;
+}
+
+/* ==========================================
+   PERATURAN CETAK (PRINT STYLE RULES FOR ATS)
+   ========================================== */
+@media print {
+    /* Sembunyikan elemen antaramuka web */
+    .no-print,
+    header,
+    footer,
+    nav,
+    button,
+    .no-print-area,
+    div[class*="lg:grid-cols-2"] > div:first-child {
+        display: none !important;
+    }
+
+    /* Set semula grid layout untuk memaparkan panel preview sahaja */
+    div[class*="lg:grid-cols-2"] {
+        display: block !important;
+        grid-template-cols: none !important;
+        divide-x: none !important;
+        height: auto !important;
+    }
+
+    div[class*="lg:grid-cols-2"] > div:last-child {
+        display: block !important;
+        width: 100% !important;
+        padding: 0 !important;
+        background: white !important;
+        overflow: visible !important;
+    }
+
+    /* Set semula margin badan kertas */
+    html, body {
+        background-color: white !important;
+        color: black !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        font-family: 'Arial', 'Calibri', 'Times New Roman', sans-serif !important;
+    }
+
+    #ats-resume-paper {
+        border: none !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: 0 !important;
+        background: white !important;
+        color: black !important;
+    }
+
+    /* Elakkan tajuk terpisah di antara halaman (page break) */
+    h1, h2, h3, .resume-section {
+        page-break-inside: avoid;
+    }
+    
+    .resume-item {
+        page-break-inside: avoid;
+    }
+
+    /* Pastikan link tidak dipaparkan URL penuhnya secara kasar jika tidak dikehendaki */
+    a[href]:after {
+        content: "" !important;
+    }
+}
