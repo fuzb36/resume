@@ -522,7 +522,7 @@ function updatePreview() {
 
             <!-- Ulasan Profesional -->
             <div class="resume-section" style="margin-bottom: 20px;">
-                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border-bottom: 2px solid #000000; margin: 0 0 8px 0; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Ulasan Profesional</h2>
+                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border: none; margin: 0 0 8px 0; padding-bottom: 0; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Ulasan Profesional</h2>
                 <p style="margin: 0; text-align: justify; font-size: 9.5pt; color: #334155; line-height: 1.5;">${ulasan}</p>
             </div>
     `;
@@ -531,7 +531,7 @@ function updatePreview() {
     if (educationData.length > 0) {
         paperHtml += `
             <div class="resume-section" style="margin-bottom: 20px;">
-                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border-bottom: 2px solid #000000; margin: 0 0 10px 0; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Pendidikan</h2>
+                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border: none; margin: 0 0 10px 0; padding-bottom: 0; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Pendidikan</h2>
         `;
         
         educationData.forEach(item => {
@@ -555,7 +555,7 @@ function updatePreview() {
     if (workData.length > 0) {
         paperHtml += `
             <div class="resume-section" style="margin-bottom: 20px;">
-                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border-bottom: 2px solid #000000; margin: 0 0 10px 0; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Pengalaman Kerja</h2>
+                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border: none; margin: 0 0 10px 0; padding-bottom: 0; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Pengalaman Kerja</h2>
         `;
         
         workData.forEach(item => {
@@ -583,7 +583,7 @@ function updatePreview() {
     if (validCerts.length > 0) {
         paperHtml += `
             <div class="resume-section" style="margin-bottom: 20px;">
-                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border-bottom: 2px solid #000000; margin: 0 0 10px 0; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Sijil & Pentauliahan</h2>
+                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border: none; margin: 0 0 10px 0; padding-bottom: 0; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Sijil & Pentauliahan</h2>
                 <ul style="margin: 0; padding-left: 15px; font-size: 9.5pt; color: #334155;">
         `;
         
@@ -598,7 +598,7 @@ function updatePreview() {
     if (kemahiran || bahasa || portfolio) {
         paperHtml += `
             <div class="resume-section" style="margin-bottom: 20px;">
-                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border-bottom: 2px solid #000000; margin: 0 0 8px 0; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Maklumat Tambahan</h2>
+                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border: none; margin: 0 0 8px 0; padding-bottom: 0; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Maklumat Tambahan</h2>
                 <table style="width: 100%; border-collapse: collapse; font-size: 9.5pt;">
         `;
         

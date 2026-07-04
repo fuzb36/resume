@@ -131,13 +131,9 @@ body {
     color: #cbd5e1 !important;
 }
 
-#ats-resume-paper.theme-futuristic [style*="border-bottom: 2px solid #1e3a8a"] {
+#ats-resume-paper.theme-futuristic [style*="border-bottom: 2px solid #000000"] {
     border-bottom: 2px solid #00f2fe !important;
     box-shadow: 0 2px 8px rgba(0, 242, 254, 0.2);
-}
-
-#ats-resume-paper.theme-futuristic [style*="border-bottom: 1px solid #93c5fd"] {
-    border-bottom: 1px solid rgba(0, 242, 254, 0.3) !important;
 }
 
 #ats-resume-paper.theme-futuristic strong {
@@ -222,7 +218,7 @@ body {
    GAYA KOTAK RESUME A4 (BINGKAI HITAM PENUH & MARGIN 0.5 INCI)
    ========================================== */
 #ats-resume-paper {
-    border: 2px solid #000000 !important; /* Bingkai hitam penuh di sekeliling seluruh page */
+    border: 2px solid #000000 !important; /* Bingkai hitam penuh */
     background-color: #ffffff !important;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4) !important;
     transition: all 0.3s ease;
@@ -234,31 +230,43 @@ body {
     padding: 0.5in !important;
 }
 
-/* Seksyen Heading — Garis Bawah Hitam di bawah sub-topik */
+/* Seksyen Heading — GARIS PENDEK HITAM di bawah sub-topik */
 #ats-resume-paper .resume-section h2 {
-    border-left: none !important;
-    border-bottom: 2px solid #000000 !important;
+    border: none !important;
     padding-left: 0 !important;
-    padding-bottom: 4px !important;
+    padding-bottom: 6px !important;
+    margin-bottom: 10px !important;
     font-family: 'Outfit', 'Arial', sans-serif !important;
     letter-spacing: 0.5px !important;
+    position: relative;
+    display: inline-block;
+    width: 100%;
 }
 
+/* Garis pendek hitam di bawah sub-topik menggunakan pseudo-element */
+#ats-resume-paper .resume-section h2::after {
+    content: "";
+    display: block;
+    width: 45px;
+    height: 2px;
+    background-color: #000000;
+    margin-top: 4px;
+}
+
+/* Futuristik — garis pendek mengikut warna tema */
 #ats-resume-paper.theme-futuristic {
-    border: 2px solid #00f2fe !important; /* Bingkai tema futuristik */
+    border: 2px solid #00f2fe !important;
 }
 
-#ats-resume-paper.theme-futuristic .resume-section h2 {
-    border-left: none !important;
-    border-bottom: 2px solid #00f2fe !important;
-    padding-left: 0 !important;
-    padding-bottom: 4px !important;
+#ats-resume-paper.theme-futuristic .resume-section h2::after {
+    background-color: #00f2fe;
+    box-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
 }
 
 /* BINGKAI DAN MARGIN SEMASA CETAK/PDF */
 @media print {
     #ats-resume-paper {
-        border: 2px solid #000000 !important; /* Bingkai hitam penuh semasa print */
+        border: 2px solid #000000 !important;
         margin: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
@@ -267,12 +275,14 @@ body {
         color: black !important;
     }
     #ats-resume-paper > div {
-        padding: 0.5in !important; /* Kekalkan margin 0.5 inci semasa print */
+        padding: 0.5in !important;
     }
     #ats-resume-paper .resume-section h2 {
-        border-left: none !important;
-        border-bottom: 2px solid #000000 !important;
+        border: none !important;
         padding-left: 0 !important;
-        padding-bottom: 4px !important;
+    }
+    #ats-resume-paper .resume-section h2::after {
+        background-color: #000000;
+        box-shadow: none;
     }
 }
