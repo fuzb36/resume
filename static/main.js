@@ -109,6 +109,9 @@ function updateApplicationDetails() {
     
     localStorage.setItem("resume-target-syarikat", syarikat);
     localStorage.setItem("resume-target-jawatan", jawatan);
+    
+    // Kemas kini kandungan kertas resume dengan segera
+    updatePreview();
 }
 
 // Muat data dari server semasa fail dimulakan
