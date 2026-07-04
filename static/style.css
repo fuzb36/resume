@@ -31,6 +31,7 @@ body {
     nav,
     button,
     .no-print-area,
+    #theme-btn,
     div[class*="lg:grid-cols-2"] > div:first-child {
         display: none !important;
     }
@@ -41,23 +42,37 @@ body {
         grid-template-cols: none !important;
         divide-x: none !important;
         height: auto !important;
+        overflow: visible !important;
     }
 
     div[class*="lg:grid-cols-2"] > div:last-child {
         display: block !important;
         width: 100% !important;
+        height: auto !important;
         padding: 0 !important;
         background: white !important;
         overflow: visible !important;
     }
 
-    /* Set semula margin badan kertas */
-    html, body {
-        background-color: white !important;
-        color: black !important;
+    /* Nyahaktifkan flexbox pada pembungkus kertas resume semasa mencetak */
+    div[class*="lg:grid-cols-2"] > div:last-child > div {
+        display: block !important;
         height: auto !important;
         margin: 0 !important;
         padding: 0 !important;
+        overflow: visible !important;
+    }
+
+    /* Set semula margin badan kertas dan matikan flexbox body/main */
+    html, body, main {
+        background-color: white !important;
+        color: black !important;
+        display: block !important;
+        height: auto !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
         font-family: 'Arial', 'Calibri', 'Times New Roman', sans-serif !important;
     }
 
