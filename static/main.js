@@ -62,6 +62,37 @@ function dragEnd(event) {
     dragType = null;
 }
 
+// ==========================================
+// TEMA PREVIEW: KLASIK VS FUTURISTIK
+// ==========================================
+function toggleTheme() {
+    const paper = document.getElementById("ats-resume-paper");
+    const btn = document.getElementById("theme-btn");
+    if (!paper || !btn) return;
+    
+    if (paper.classList.contains("theme-futuristic")) {
+        paper.classList.remove("theme-futuristic");
+        btn.innerHTML = `
+            <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+            </span>
+            Tukar Tema: Klasik
+        `;
+        localStorage.setItem("resume-preview-theme", "classic");
+    } else {
+        paper.classList.add("theme-futuristic");
+        btn.innerHTML = `
+            <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+            </span>
+            Tukar Tema: Futuristik
+        `;
+        localStorage.setItem("resume-preview-theme", "futuristic");
+    }
+}
+
 // Muat data dari server semasa fail dimulakan
 document.addEventListener("DOMContentLoaded", () => {
     try {
@@ -98,6 +129,23 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Kemas kini Pratonton Kertas Resume
     updatePreview();
+
+    // Muat tema simpanan dari localStorage
+    const savedTheme = localStorage.getItem("resume-preview-theme");
+    if (savedTheme === "futuristic") {
+        const paper = document.getElementById("ats-resume-paper");
+        const btn = document.getElementById("theme-btn");
+        if (paper && btn) {
+            paper.classList.add("theme-futuristic");
+            btn.innerHTML = `
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                </span>
+                Tukar Tema: Futuristik
+            `;
+        }
+    }
 });
 
 // ==========================================

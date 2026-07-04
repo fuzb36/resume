@@ -87,3 +87,119 @@ body {
         content: "" !important;
     }
 }
+
+/* ==========================================
+   TEMA FUTURISTIK (DAPAT DILIHAT PADA WEB)
+   ========================================== */
+#ats-resume-paper.theme-futuristic {
+    background: radial-gradient(circle at top left, #0f172a, #020617) !important;
+    color: #f1f5f9 !important;
+    border: 1px solid rgba(0, 242, 254, 0.25) !important;
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.15) !important;
+    border-radius: 16px;
+    font-family: 'Inter', sans-serif !important;
+}
+
+#ats-resume-paper.theme-futuristic [style*="color: #0f172a"] {
+    color: #f8fafc !important;
+}
+
+#ats-resume-paper.theme-futuristic [style*="color: #1e3a8a"] {
+    color: #00f2fe !important;
+    text-shadow: 0 0 8px rgba(0, 242, 254, 0.3);
+}
+
+#ats-resume-paper.theme-futuristic [style*="color: #475569"] {
+    color: #94a3b8 !important;
+}
+
+#ats-resume-paper.theme-futuristic [style*="color: #334155"] {
+    color: #cbd5e1 !important;
+}
+
+#ats-resume-paper.theme-futuristic [style*="border-bottom: 2px solid #1e3a8a"] {
+    border-bottom: 2px solid #00f2fe !important;
+    box-shadow: 0 2px 8px rgba(0, 242, 254, 0.2);
+}
+
+#ats-resume-paper.theme-futuristic [style*="border-bottom: 1px solid #93c5fd"] {
+    border-bottom: 1px solid rgba(0, 242, 254, 0.3) !important;
+}
+
+#ats-resume-paper.theme-futuristic strong {
+    color: #38bdf8 !important;
+}
+
+#ats-resume-paper.theme-futuristic span {
+    color: #e2e8f0 !important;
+}
+
+#ats-resume-paper.theme-futuristic p {
+    color: #94a3b8 !important;
+}
+
+#ats-resume-paper.theme-futuristic ul {
+    color: #cbd5e1 !important;
+}
+
+#ats-resume-paper.theme-futuristic td {
+    color: #cbd5e1 !important;
+}
+
+/* KECUALIKAN TEMA FUTURISTIK SEMASA CETAK/PDF */
+@media print {
+    #ats-resume-paper.theme-futuristic {
+        background: white !important;
+        color: black !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        font-family: 'Arial', 'Calibri', 'Times New Roman', sans-serif !important;
+    }
+    
+    #ats-resume-paper.theme-futuristic [style*="color: #0f172a"] {
+        color: #0f172a !important;
+    }
+
+    #ats-resume-paper.theme-futuristic [style*="color: #1e3a8a"] {
+        color: #1e3a8a !important;
+        text-shadow: none !important;
+    }
+
+    #ats-resume-paper.theme-futuristic [style*="color: #475569"] {
+        color: #475569 !important;
+    }
+
+    #ats-resume-paper.theme-futuristic [style*="color: #334155"] {
+        color: #334155 !important;
+    }
+
+    #ats-resume-paper.theme-futuristic [style*="border-bottom: 2px solid #1e3a8a"] {
+        border-bottom: 2px solid #1e3a8a !important;
+        box-shadow: none !important;
+    }
+
+    #ats-resume-paper.theme-futuristic [style*="border-bottom: 1px solid #93c5fd"] {
+        border-bottom: 1px solid #93c5fd !important;
+    }
+
+    #ats-resume-paper.theme-futuristic strong {
+        color: inherit !important;
+    }
+
+    #ats-resume-paper.theme-futuristic span {
+        color: inherit !important;
+    }
+
+    #ats-resume-paper.theme-futuristic p {
+        color: inherit !important;
+    }
+
+    #ats-resume-paper.theme-futuristic ul {
+        color: inherit !important;
+    }
+
+    #ats-resume-paper.theme-futuristic td {
+        color: inherit !important;
+    }
+}
