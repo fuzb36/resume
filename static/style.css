@@ -219,31 +219,19 @@ body {
 }
 
 /* ==========================================
-   GAYA KOTAK RESUME A4 YANG MENARIK
+   GAYA KOTAK RESUME A4 YANG MENARIK (BINGKAI PENUH & MARGIN 0.5 INCI)
    ========================================== */
 #ats-resume-paper {
-    border: 1px solid #cbd5e1 !important;
+    border: 2px solid #1e3a8a !important; /* Bingkai penuh di sekeliling seluruh page */
     background-color: #ffffff !important;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4) !important;
     transition: all 0.3s ease;
     position: relative;
 }
 
-/* Bingkai dalaman yang halus & elegan */
-#ats-resume-paper::before {
-    content: "";
-    position: absolute;
-    top: 16px;
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
-    border: 1px dashed rgba(30, 58, 138, 0.15);
-    pointer-events: none;
-}
-
-/* Indentasi kandungan untuk memberi ruang bernafas kepada bingkai */
+/* Margin kandungan 0.5 inci dari bingkai */
 #ats-resume-paper > div {
-    padding: 20px 25px !important;
+    padding: 0.5in !important;
 }
 
 /* Seksyen Heading dengan Aksen Garisan Sisi Kiri */
@@ -255,8 +243,8 @@ body {
     letter-spacing: 0.5px !important;
 }
 
-#ats-resume-paper.theme-futuristic::before {
-    border: 1px dashed rgba(0, 242, 254, 0.15);
+#ats-resume-paper.theme-futuristic {
+    border: 2px solid #00f2fe !important; /* Bingkai penuh tema futuristik */
 }
 
 #ats-resume-paper.theme-futuristic .resume-section h2 {
@@ -265,13 +253,19 @@ body {
     padding-left: 10px !important;
 }
 
-/* PEMBATALAN BINGKAI SEMASA PRINT */
+/* TAPAN BINGKAI DAN MARGIN SEMASA CETAK/PDF */
 @media print {
-    #ats-resume-paper::before {
-        display: none !important;
+    #ats-resume-paper {
+        border: 2px solid #1e3a8a !important; /* Kekalkan bingkai penuh semasa print */
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: 0 !important;
+        background: white !important;
+        color: black !important;
     }
     #ats-resume-paper > div {
-        padding: 0 !important;
+        padding: 0.5in !important; /* Kekalkan margin 0.5 inci semasa print */
     }
     #ats-resume-paper .resume-section h2 {
         border-left: 3.5px solid #1e3a8a !important;
