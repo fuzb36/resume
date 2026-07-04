@@ -383,7 +383,7 @@ function renderCertForm() {
     
     certData.forEach((item, index) => {
         const div = document.createElement("div");
-        div.className = "draggable-card flex items-center gap-3 bg-slate-800/20 p-2 rounded-xl border border-slate-700/40 transition";
+        div.className = "draggable-card flex items-center gap-2 bg-slate-800/20 p-2 rounded-xl border border-slate-700/40 transition";
         div.setAttribute("draggable", "false");
         div.setAttribute("ondragstart", `dragStart(event, ${index}, 'cert')`);
         div.setAttribute("ondragover", "dragOver(event)");
@@ -391,7 +391,9 @@ function renderCertForm() {
         div.setAttribute("ondragend", "dragEnd(event)");
         
         div.innerHTML = `
-            <input type="text" value="${item.nama || ''}" oninput="updateCertItem(${index}, this.value)" placeholder="Cth: AWS Certified Cloud Practitioner (2024)" class="block flex-grow rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
+            <input type="text" value="${item.tahun || ''}" oninput="updateCertField(${index}, 'tahun', this.value)" placeholder="Tahun" class="block w-16 rounded-lg border border-slate-700 bg-slate-800 px-2 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition text-center shrink-0">
+            <span class="text-slate-400 text-xs shrink-0">-</span>
+            <input type="text" value="${item.nama || ''}" oninput="updateCertField(${index}, 'nama', this.value)" placeholder="Cth: AWS Certified Cloud Practitioner" class="block flex-grow rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
             <div class="flex items-center gap-2 shrink-0">
                 <div onmouseenter="setDraggable(this, true)" onmouseleave="setDraggable(this, false)" class="cursor-grab active:cursor-grabbing text-slate-500 hover:text-slate-300 transition p-1">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -406,7 +408,7 @@ function renderCertForm() {
 }
 
 function addCertItem() {
-    certData.push({ nama: "" });
+    certData.push({ nama: "", tahun: "" });
     renderCertForm();
     updatePreview();
 }
@@ -419,6 +421,11 @@ function removeCertItem(index) {
 
 function updateCertItem(index, value) {
     certData[index].nama = value;
+    updatePreview();
+}
+
+function updateCertField(index, field, value) {
+    certData[index][field] = value;
     updatePreview();
 }
 
@@ -590,13 +597,10 @@ function updatePreview() {
         `;
         
         validCerts.forEach(item => {
-            // Ekstrak tahun dari kurungan di hujung nama sijil: "Nama Sijil (2024)" -> "(2024) Nama Sijil"
-            const bracketMatch = item.nama.match(/^(.*?)\s*(\(\d{4}(?:\s*[-–]\s*\d{4})?\))\s*$/);
+            // Format: 'tahun - nama' tanpa kurungan
             let displayName;
-            if (bracketMatch) {
-                const namaTanpaTahun = bracketMatch[1].trim();
-                const tahunKurungan = bracketMatch[2];
-                displayName = `<span style="font-weight: bold; color: #334155;">${tahunKurungan}</span> ${namaTanpaTahun}`;
+            if (item.tahun && item.tahun.trim()) {
+                displayName = `<span style="font-weight: bold; color: #0f172a;">${item.tahun.trim()}</span> - ${item.nama}`;
             } else {
                 displayName = item.nama;
             }
