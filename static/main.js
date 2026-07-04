@@ -463,9 +463,11 @@ function updatePreview() {
     
     let permohonanHtml = "";
     if (syarikat || jawatan) {
+        const rawText = `Permohonan ${jawatan || 'Jawatan'} di ${syarikat || 'Syarikat'}`;
+        const uppercaseText = rawText.toUpperCase();
         permohonanHtml = `
-            <div style="font-size: 10.5pt; font-weight: 700; color: #1e3a8a; margin-top: 6px; font-family: 'Outfit', 'Arial', sans-serif;">
-                Permohonan ${jawatan || 'Jawatan'} di ${syarikat || 'Syarikat'}
+            <div style="text-align: center; font-size: 11pt; font-weight: 800; color: #1e3a8a; margin: 12px 0 16px 0; padding-bottom: 10px; border-bottom: 2px solid #1e3a8a; font-family: 'Outfit', 'Arial', sans-serif; letter-spacing: 0.5px;">
+                ${uppercaseText}
             </div>
         `;
     }
@@ -473,7 +475,7 @@ function updatePreview() {
     let headerHtml = "";
     if (gambarBase64) {
         headerHtml = `
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; border-bottom: 2px solid #1e3a8a; padding-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; border-bottom: 2px solid #1e3a8a; padding-bottom: 12px;">
                 <div style="flex-grow: 1; padding-right: 20px; text-align: left;">
                     <h1 style="font-size: 22pt; font-weight: 800; color: #0f172a; margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">${nama}</h1>
                     <div style="font-size: 9.5pt; color: #475569; margin-bottom: 6px;">
@@ -483,7 +485,6 @@ function updatePreview() {
                         <span>E-mel: <strong>${email}</strong></span> |
                         <span>Telefon: <strong>${telefon}</strong></span>
                     </div>
-                    ${permohonanHtml}
                     <div style="font-size: 9pt; color: #64748b; margin-top: 6px; line-height: 1.4;">
                         ${alamat}
                     </div>
@@ -495,7 +496,7 @@ function updatePreview() {
         `;
     } else {
         headerHtml = `
-            <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #1e3a8a; padding-bottom: 12px;">
+            <div style="text-align: center; margin-bottom: 12px; border-bottom: 2px solid #1e3a8a; padding-bottom: 12px;">
                 <h1 style="font-size: 22pt; font-weight: 800; color: #0f172a; margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">${nama}</h1>
                 <div style="font-size: 9.5pt; color: #475569; margin-bottom: 6px;">
                     Nombor IC: <strong>${ic}</strong>
@@ -504,7 +505,6 @@ function updatePreview() {
                     <span>E-mel: <strong>${email}</strong></span> |
                     <span>Telefon: <strong>${telefon}</strong></span>
                 </div>
-                ${permohonanHtml}
                 <div style="font-size: 9pt; color: #64748b; margin-top: 6px; line-height: 1.4;">
                     ${alamat}
                 </div>
@@ -516,6 +516,9 @@ function updatePreview() {
         <div style="font-family: 'Inter', 'Arial', sans-serif; line-height: 1.5; color: #0f172a; font-size: 10.5pt; padding: 10px;">
             <!-- Header Resume -->
             ${headerHtml}
+
+            <!-- Tagline Permohonan -->
+            ${permohonanHtml}
 
             <!-- Ulasan Profesional -->
             <div class="resume-section" style="margin-bottom: 20px;">

@@ -217,3 +217,65 @@ body {
         color: inherit !important;
     }
 }
+
+/* ==========================================
+   GAYA KOTAK RESUME A4 YANG MENARIK
+   ========================================== */
+#ats-resume-paper {
+    border: 1px solid #cbd5e1 !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4) !important;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Bingkai dalaman yang halus & elegan */
+#ats-resume-paper::before {
+    content: "";
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    border: 1px dashed rgba(30, 58, 138, 0.15);
+    pointer-events: none;
+}
+
+/* Indentasi kandungan untuk memberi ruang bernafas kepada bingkai */
+#ats-resume-paper > div {
+    padding: 20px 25px !important;
+}
+
+/* Seksyen Heading dengan Aksen Garisan Sisi Kiri */
+#ats-resume-paper .resume-section h2 {
+    border-left: 3.5px solid #1e3a8a !important;
+    border-bottom: none !important;
+    padding-left: 10px !important;
+    font-family: 'Outfit', 'Arial', sans-serif !important;
+    letter-spacing: 0.5px !important;
+}
+
+#ats-resume-paper.theme-futuristic::before {
+    border: 1px dashed rgba(0, 242, 254, 0.15);
+}
+
+#ats-resume-paper.theme-futuristic .resume-section h2 {
+    border-left: 3.5px solid #00f2fe !important;
+    border-bottom: none !important;
+    padding-left: 10px !important;
+}
+
+/* PEMBATALAN BINGKAI SEMASA PRINT */
+@media print {
+    #ats-resume-paper::before {
+        display: none !important;
+    }
+    #ats-resume-paper > div {
+        padding: 0 !important;
+    }
+    #ats-resume-paper .resume-section h2 {
+        border-left: 3.5px solid #1e3a8a !important;
+        border-bottom: none !important;
+        padding-left: 10px !important;
+    }
+}
