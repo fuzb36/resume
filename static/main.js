@@ -536,11 +536,13 @@ function updatePreview() {
         
         educationData.forEach(item => {
             if (item.institusi || item.bidang) {
+                const tahun = (item.tahun_mula || item.tahun_tamat)
+                    ? ` (${item.tahun_mula || ''}${item.tahun_mula && item.tahun_tamat ? ' – ' : ''}${item.tahun_tamat || ''})` 
+                    : '';
                 paperHtml += `
                     <div class="resume-item" style="margin-bottom: 10px; font-size: 9.5pt;">
-                        <div style="display: flex; justify-content: space-between; font-weight: bold; color: #0f172a;">
-                            <span>${item.institusi || 'Nama Institusi'}</span>
-                            <span style="font-weight: normal; color: #475569;">${item.tahun_mula || 'Tahun'} &ndash; ${item.tahun_tamat || 'Tahun'}</span>
+                        <div style="font-weight: bold; color: #0f172a;">
+                            ${item.institusi || 'Nama Institusi'}<span style="font-weight: normal; color: #334155;">${tahun}</span>
                         </div>
                         <div style="font-style: italic; color: #475569; margin-top: 1px;">${item.bidang || 'Bidang Pengajian'}</div>
                     </div>
@@ -583,12 +585,22 @@ function updatePreview() {
     if (validCerts.length > 0) {
         paperHtml += `
             <div class="resume-section" style="margin-bottom: 20px;">
-                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border: none; margin: 0 0 10px 0; padding-bottom: 0; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Sijil & Pentauliahan</h2>
+                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border: none; margin: 0 0 10px 0; padding-bottom: 0; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Sijil &amp; Pentauliahan</h2>
                 <ul style="margin: 0; padding-left: 15px; font-size: 9.5pt; color: #334155;">
         `;
         
         validCerts.forEach(item => {
-            paperHtml += `<li style="margin-bottom: 4px; line-height: 1.4;">${item.nama}</li>`;
+            // Ekstrak tahun dari kurungan di hujung nama sijil: "Nama Sijil (2024)" -> "(2024) Nama Sijil"
+            const bracketMatch = item.nama.match(/^(.*?)\s*(\(\d{4}(?:\s*[-–]\s*\d{4})?\))\s*$/);
+            let displayName;
+            if (bracketMatch) {
+                const namaTanpaTahun = bracketMatch[1].trim();
+                const tahunKurungan = bracketMatch[2];
+                displayName = `<span style="font-weight: bold; color: #334155;">${tahunKurungan}</span> ${namaTanpaTahun}`;
+            } else {
+                displayName = item.nama;
+            }
+            paperHtml += `<li style="margin-bottom: 4px; line-height: 1.5;">${displayName}</li>`;
         });
         
         paperHtml += `</ul></div>`;

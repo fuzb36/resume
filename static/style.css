@@ -108,7 +108,7 @@ body {
 #ats-resume-paper.theme-futuristic {
     background: radial-gradient(circle at top left, #0f172a, #020617) !important;
     color: #f1f5f9 !important;
-    border: 1px solid rgba(0, 242, 254, 0.25) !important;
+    border: 2px solid #000000 !important;
     box-shadow: 0 0 25px rgba(0, 242, 254, 0.15) !important;
     border-radius: 16px;
     font-family: 'Inter', sans-serif !important;
