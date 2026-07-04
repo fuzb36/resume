@@ -93,6 +93,24 @@ function toggleTheme() {
     }
 }
 
+// ==========================================
+// TEMA & LOGIK DETIL PERMOHONAN SYARIKAT
+// ==========================================
+function updateApplicationDetails() {
+    const syarikatInput = document.getElementById("preview-syarikat");
+    const jawatanInput = document.getElementById("preview-jawatan");
+    const tagline = document.getElementById("preview-tagline");
+    if (!syarikatInput || !jawatanInput || !tagline) return;
+
+    const syarikat = syarikatInput.value || "Syarikat Sasaran";
+    const jawatan = jawatanInput.value || "Jawatan Sasaran";
+    
+    tagline.textContent = `Permohonan ${jawatan} di ${syarikat}`;
+    
+    localStorage.setItem("resume-target-syarikat", syarikat);
+    localStorage.setItem("resume-target-jawatan", jawatan);
+}
+
 // Muat data dari server semasa fail dimulakan
 document.addEventListener("DOMContentLoaded", () => {
     try {
@@ -146,6 +164,21 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         }
     }
+
+    // Muat butiran permohonan sasaran dari localStorage
+    const savedSyarikat = localStorage.getItem("resume-target-syarikat");
+    const savedJawatan = localStorage.getItem("resume-target-jawatan");
+    
+    const inputSyarikat = document.getElementById("preview-syarikat");
+    const inputJawatan = document.getElementById("preview-jawatan");
+    
+    if (inputSyarikat && savedSyarikat !== null) {
+        inputSyarikat.value = savedSyarikat;
+    }
+    if (inputJawatan && savedJawatan !== null) {
+        inputJawatan.value = savedJawatan;
+    }
+    updateApplicationDetails();
 });
 
 // ==========================================
