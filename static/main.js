@@ -157,7 +157,7 @@ function renderEduForm() {
     
     educationData.forEach((item, index) => {
         const div = document.createElement("div");
-        div.className = "draggable-card p-4 bg-slate-800/40 rounded-xl border border-slate-700/60 relative flex gap-3 items-start transition";
+        div.className = "draggable-card p-4 bg-slate-800/40 rounded-xl border border-slate-700/60 relative transition space-y-3";
         div.setAttribute("draggable", "false");
         div.setAttribute("ondragstart", `dragStart(event, ${index}, 'edu')`);
         div.setAttribute("ondragover", "dragOver(event)");
@@ -165,16 +165,18 @@ function renderEduForm() {
         div.setAttribute("ondragend", "dragEnd(event)");
         
         div.innerHTML = `
-            <!-- Drag Handle -->
-            <div onmouseenter="setDraggable(this, true)" onmouseleave="setDraggable(this, false)" class="cursor-grab active:cursor-grabbing text-slate-500 hover:text-slate-300 transition shrink-0 p-1 mt-1">
-                <svg class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+            <!-- Kawalan: Drag Handle & Padam -->
+            <div class="absolute top-3 right-3 flex items-center gap-3">
+                <div onmouseenter="setDraggable(this, true)" onmouseleave="setDraggable(this, false)" class="cursor-grab active:cursor-grabbing text-slate-500 hover:text-slate-300 transition p-1">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </div>
+                <button type="button" onclick="removeEduItem(${index})" class="text-slate-500 hover:text-rose-400 text-xs">Padam</button>
             </div>
             
-            <div class="flex-grow space-y-3">
-                <button type="button" onclick="removeEduItem(${index})" class="absolute top-3 right-3 text-slate-500 hover:text-rose-400 text-xs">Padam</button>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="space-y-3">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pr-20">
                     <div>
                         <label class="block text-[10px] font-semibold text-slate-400 uppercase">Institusi (Sekolah/Universiti)</label>
                         <input type="text" value="${item.institusi || ''}" oninput="updateEduItem(${index}, 'institusi', this.value)" placeholder="Cth: Universiti Malaya" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
@@ -184,7 +186,7 @@ function renderEduForm() {
                         <input type="text" value="${item.bidang || ''}" oninput="updateEduItem(${index}, 'bidang', this.value)" placeholder="Cth: Ijazah Sarjana Muda Sains Komputer" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-2 gap-3 pr-20">
                     <div>
                         <label class="block text-[10px] font-semibold text-slate-400 uppercase">Tahun Mula</label>
                         <input type="text" value="${item.tahun_mula || ''}" oninput="updateEduItem(${index}, 'tahun_mula', this.value)" placeholder="Cth: 2018" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
@@ -226,7 +228,7 @@ function renderWorkForm() {
     
     workData.forEach((item, index) => {
         const div = document.createElement("div");
-        div.className = "draggable-card p-4 bg-slate-800/40 rounded-xl border border-slate-700/60 relative flex gap-3 items-start transition";
+        div.className = "draggable-card p-4 bg-slate-800/40 rounded-xl border border-slate-700/60 relative transition space-y-3";
         div.setAttribute("draggable", "false");
         div.setAttribute("ondragstart", `dragStart(event, ${index}, 'work')`);
         div.setAttribute("ondragover", "dragOver(event)");
@@ -234,16 +236,18 @@ function renderWorkForm() {
         div.setAttribute("ondragend", "dragEnd(event)");
         
         div.innerHTML = `
-            <!-- Drag Handle -->
-            <div onmouseenter="setDraggable(this, true)" onmouseleave="setDraggable(this, false)" class="cursor-grab active:cursor-grabbing text-slate-500 hover:text-slate-300 transition shrink-0 p-1 mt-1">
-                <svg class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+            <!-- Kawalan: Drag Handle & Padam -->
+            <div class="absolute top-3 right-3 flex items-center gap-3">
+                <div onmouseenter="setDraggable(this, true)" onmouseleave="setDraggable(this, false)" class="cursor-grab active:cursor-grabbing text-slate-500 hover:text-slate-300 transition p-1">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </div>
+                <button type="button" onclick="removeWorkItem(${index})" class="text-slate-500 hover:text-rose-400 text-xs">Padam</button>
             </div>
             
-            <div class="flex-grow space-y-3">
-                <button type="button" onclick="removeWorkItem(${index})" class="absolute top-3 right-3 text-slate-500 hover:text-rose-400 text-xs">Padam</button>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="space-y-3">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pr-20">
                     <div>
                         <label class="block text-[10px] font-semibold text-slate-400 uppercase">Jawatan Pekerjaan</label>
                         <input type="text" value="${item.jawatan || ''}" oninput="updateWorkItem(${index}, 'jawatan', this.value)" placeholder="Cth: Senior Software Engineer" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
@@ -253,7 +257,7 @@ function renderWorkForm() {
                         <input type="text" value="${item.lokasi || ''}" oninput="updateWorkItem(${index}, 'lokasi', this.value)" placeholder="Cth: Tech Solutions Sdn Bhd, Kuala Lumpur" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
                     </div>
                 </div>
-                <div class="grid grid-cols-1 gap-3">
+                <div class="grid grid-cols-1 gap-3 pr-20">
                     <div>
                         <label class="block text-[10px] font-semibold text-slate-400 uppercase">Tempoh Waktu (Dari Tahun sehingga)</label>
                         <input type="text" value="${item.dari_hingga || ''}" oninput="updateWorkItem(${index}, 'dari_hingga', this.value)" placeholder="Cth: 2022 - Kini atau 2020 - 2022" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
@@ -295,7 +299,7 @@ function renderCertForm() {
     
     certData.forEach((item, index) => {
         const div = document.createElement("div");
-        div.className = "draggable-card flex items-center gap-2 bg-slate-800/20 p-2 rounded-xl border border-slate-700/40 transition";
+        div.className = "draggable-card flex items-center gap-3 bg-slate-800/20 p-2 rounded-xl border border-slate-700/40 transition";
         div.setAttribute("draggable", "false");
         div.setAttribute("ondragstart", `dragStart(event, ${index}, 'cert')`);
         div.setAttribute("ondragover", "dragOver(event)");
@@ -303,14 +307,15 @@ function renderCertForm() {
         div.setAttribute("ondragend", "dragEnd(event)");
         
         div.innerHTML = `
-            <!-- Drag Handle -->
-            <div onmouseenter="setDraggable(this, true)" onmouseleave="setDraggable(this, false)" class="cursor-grab active:cursor-grabbing text-slate-500 hover:text-slate-300 transition shrink-0 px-2 py-1">
-                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </div>
             <input type="text" value="${item.nama || ''}" oninput="updateCertItem(${index}, this.value)" placeholder="Cth: AWS Certified Cloud Practitioner (2024)" class="block flex-grow rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
-            <button type="button" onclick="removeCertItem(${index})" class="text-xs text-rose-400 hover:text-rose-300 px-2">Padam</button>
+            <div class="flex items-center gap-2 shrink-0">
+                <div onmouseenter="setDraggable(this, true)" onmouseleave="setDraggable(this, false)" class="cursor-grab active:cursor-grabbing text-slate-500 hover:text-slate-300 transition p-1">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </div>
+                <button type="button" onclick="removeCertItem(${index})" class="text-xs text-rose-400 hover:text-rose-300 px-1">Padam</button>
+            </div>
         `;
         container.appendChild(div);
     });
