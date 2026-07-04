@@ -452,6 +452,21 @@ function updatePreview() {
 
     validateIC(ic);
 
+    // Ambil info permohonan untuk diletakkan pada kertas resume
+    const syarikatEl = document.getElementById("preview-syarikat");
+    const jawatanEl = document.getElementById("preview-jawatan");
+    const syarikat = syarikatEl ? syarikatEl.value : "";
+    const jawatan = jawatanEl ? jawatanEl.value : "";
+    
+    let permohonanHtml = "";
+    if (syarikat || jawatan) {
+        permohonanHtml = `
+            <div style="font-size: 10.5pt; font-weight: 700; color: #1e3a8a; margin-top: 6px; font-family: 'Outfit', 'Arial', sans-serif;">
+                Permohonan ${jawatan || 'Jawatan'} di ${syarikat || 'Syarikat'}
+            </div>
+        `;
+    }
+
     let headerHtml = "";
     if (gambarBase64) {
         headerHtml = `
@@ -465,6 +480,7 @@ function updatePreview() {
                         <span>E-mel: <strong>${email}</strong></span> |
                         <span>Telefon: <strong>${telefon}</strong></span>
                     </div>
+                    ${permohonanHtml}
                     <div style="font-size: 9pt; color: #64748b; margin-top: 6px; line-height: 1.4;">
                         ${alamat}
                     </div>
@@ -485,6 +501,7 @@ function updatePreview() {
                     <span>E-mel: <strong>${email}</strong></span> |
                     <span>Telefon: <strong>${telefon}</strong></span>
                 </div>
+                ${permohonanHtml}
                 <div style="font-size: 9pt; color: #64748b; margin-top: 6px; line-height: 1.4;">
                     ${alamat}
                 </div>
