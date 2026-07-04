@@ -4,6 +4,7 @@
 let educationData = [];
 let workData = [];
 let certData = [];
+let gambarBase64 = "";
 
 // Muat data dari server semasa fail dimulakan
 document.addEventListener("DOMContentLoaded", () => {
@@ -22,6 +23,18 @@ document.addEventListener("DOMContentLoaded", () => {
         certData = certRaw ? JSON.parse(certRaw) : [];
     } catch (e) { certData = []; }
 
+    try {
+        const otherRaw = document.getElementById("server-data-other").textContent;
+        const otherData = otherRaw ? JSON.parse(otherRaw) : {};
+        gambarBase64 = otherData.gambar_base64 || "";
+        if (gambarBase64) {
+            document.getElementById("gambar-status").textContent = "Gambar sedia ada dimuatkan";
+            document.getElementById("btn-buang-gambar").classList.remove("hidden");
+        }
+    } catch (e) {
+        gambarBase64 = "";
+    }
+
     // Render Borang Dinamik
     renderEduForm();
     renderWorkForm();
@@ -30,6 +43,38 @@ document.addEventListener("DOMContentLoaded", () => {
     // Kemas kini Pratonton Kertas Resume
     updatePreview();
 });
+
+// ==========================================
+// PENGENDALIAN MUAT NAIK GAMBAR
+// ==========================================
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    // Had saiz: 2MB
+    if (file.size > 2 * 1024 * 1024) {
+        alert("Ralat: Saiz gambar profil tidak boleh melebihi 2MB!");
+        event.target.value = "";
+        return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        gambarBase64 = e.target.result;
+        document.getElementById("gambar-status").textContent = "Gambar baru dimuatkan (" + file.name.substring(0, 15) + "...)";
+        document.getElementById("btn-buang-gambar").classList.remove("hidden");
+        updatePreview();
+    };
+    reader.readAsDataURL(file);
+}
+
+function clearImage() {
+    gambarBase64 = "";
+    document.getElementById("input-gambar").value = "";
+    document.getElementById("gambar-status").textContent = "Tiada gambar dipilih";
+    document.getElementById("btn-buang-gambar").classList.add("hidden");
+    updatePreview();
+}
 
 // ==========================================
 // PENGENDALIAN ACCORDION
@@ -214,8 +259,8 @@ function updatePreview() {
     const ic = document.getElementById("input-ic").value || "XXXXXX-XX-XXXX";
     const email = document.getElementById("input-email").value || "email@domain.com";
     const telefon = document.getElementById("input-telefon").value || "+601X-XXXXXXX";
-    const alamat = document.getElementById("input-alamat").value || "Alamat kediaman anda akan dipaparkan di sini secara tersusun.";
-    const ulasan = document.getElementById("input-ulasan").value || "Tulis ringkasan profil profesional anda yang menekankan kemahiran utama dan pencapaian kerjaya utama.";
+    const alamat = document.getElementById("input-alamat").value || "Alamat kediaman anda.";
+    const ulasan = document.getElementById("input-ulasan").value || "Ulasan profil profesional anda.";
     
     const kemahiran = document.getElementById("input-kemahiran").value || "";
     const bahasa = document.getElementById("input-bahasa").value || "";
@@ -223,27 +268,55 @@ function updatePreview() {
 
     validateIC(ic);
 
-    let paperHtml = `
-        <div style="font-family: 'Arial', 'Helvetica', sans-serif; line-height: 1.5; color: #000; font-size: 11pt;">
-            <!-- Header Resume -->
-            <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 12px;">
-                <h1 style="font-size: 20pt; font-weight: bold; margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 0.5px;">${nama}</h1>
-                <div style="font-size: 9.5pt; color: #333; margin-bottom: 6px;">
-                    Nombor IC: ${ic}
+    let headerHtml = "";
+    if (gambarBase64) {
+        headerHtml = `
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; border-bottom: 2px solid #1e3a8a; padding-bottom: 12px;">
+                <div style="flex-grow: 1; padding-right: 20px; text-align: left;">
+                    <h1 style="font-size: 22pt; font-weight: 800; color: #0f172a; margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">${nama}</h1>
+                    <div style="font-size: 9.5pt; color: #475569; margin-bottom: 6px;">
+                        Nombor IC: <strong>${ic}</strong>
+                    </div>
+                    <div style="font-size: 9.5pt; color: #334155; display: flex; flex-wrap: wrap; gap: 8px;">
+                        <span>E-mel: <strong>${email}</strong></span> |
+                        <span>Telefon: <strong>${telefon}</strong></span>
+                    </div>
+                    <div style="font-size: 9pt; color: #64748b; margin-top: 6px; line-height: 1.4;">
+                        ${alamat}
+                    </div>
                 </div>
-                <div style="font-size: 9.5pt; color: #333; display: flex; justify-content: center; flex-wrap: wrap; gap: 8px;">
-                    <span>Email: <strong>${email}</strong></span> |
+                <div style="flex-shrink: 0; width: 105px; height: 135px; border: 1.5px solid #cbd5e1; padding: 2px; background: #fff; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-top: 5px;">
+                    <img src="${gambarBase64}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;" alt="Foto Profil">
+                </div>
+            </div>
+        `;
+    } else {
+        headerHtml = `
+            <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #1e3a8a; padding-bottom: 12px;">
+                <h1 style="font-size: 22pt; font-weight: 800; color: #0f172a; margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">${nama}</h1>
+                <div style="font-size: 9.5pt; color: #475569; margin-bottom: 6px;">
+                    Nombor IC: <strong>${ic}</strong>
+                </div>
+                <div style="font-size: 9.5pt; color: #334155; display: flex; justify-content: center; flex-wrap: wrap; gap: 8px;">
+                    <span>E-mel: <strong>${email}</strong></span> |
                     <span>Telefon: <strong>${telefon}</strong></span>
                 </div>
-                <div style="font-size: 9pt; color: #555; margin-top: 4px;">
+                <div style="font-size: 9pt; color: #64748b; margin-top: 6px; line-height: 1.4;">
                     ${alamat}
                 </div>
             </div>
+        `;
+    }
+
+    let paperHtml = `
+        <div style="font-family: 'Inter', 'Arial', sans-serif; line-height: 1.5; color: #0f172a; font-size: 10.5pt; padding: 10px;">
+            <!-- Header Resume -->
+            ${headerHtml}
 
             <!-- Ulasan Profesional -->
             <div class="resume-section" style="margin-bottom: 20px;">
-                <h2 style="font-size: 11pt; font-weight: bold; border-bottom: 1px solid #aaa; margin: 0 0 8px 0; padding-bottom: 2px; text-transform: uppercase;">Ulasan Profesional</h2>
-                <p style="margin: 0; text-align: justify; font-size: 10pt;">${ulasan}</p>
+                <h2 style="font-size: 11pt; font-weight: bold; color: #1e3a8a; border-bottom: 1px solid #93c5fd; margin: 0 0 8px 0; padding-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Ulasan Profesional</h2>
+                <p style="margin: 0; text-align: justify; font-size: 9.5pt; color: #334155; line-height: 1.5;">${ulasan}</p>
             </div>
     `;
 
@@ -251,18 +324,18 @@ function updatePreview() {
     if (educationData.length > 0) {
         paperHtml += `
             <div class="resume-section" style="margin-bottom: 20px;">
-                <h2 style="font-size: 11pt; font-weight: bold; border-bottom: 1px solid #aaa; margin: 0 0 10px 0; padding-bottom: 2px; text-transform: uppercase;">Pendidikan</h2>
+                <h2 style="font-size: 11pt; font-weight: bold; color: #1e3a8a; border-bottom: 1px solid #93c5fd; margin: 0 0 10px 0; padding-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Pendidikan</h2>
         `;
         
         educationData.forEach(item => {
             if (item.institusi || item.bidang) {
                 paperHtml += `
-                    <div class="resume-item" style="margin-bottom: 8px; font-size: 10pt;">
-                        <div style="display: flex; justify-content: space-between; font-weight: bold;">
+                    <div class="resume-item" style="margin-bottom: 10px; font-size: 9.5pt;">
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; color: #0f172a;">
                             <span>${item.institusi || 'Nama Institusi'}</span>
-                            <span>${item.tahun_mula || 'Tahun'} - ${item.tahun_tamat || 'Tahun'}</span>
+                            <span style="font-weight: normal; color: #475569;">${item.tahun_mula || 'Tahun'} &ndash; ${item.tahun_tamat || 'Tahun'}</span>
                         </div>
-                        <div style="font-style: italic; color: #333;">${item.bidang || 'Bidang Pengajian'}</div>
+                        <div style="font-style: italic; color: #475569; margin-top: 1px;">${item.bidang || 'Bidang Pengajian'}</div>
                     </div>
                 `;
             }
@@ -275,21 +348,21 @@ function updatePreview() {
     if (workData.length > 0) {
         paperHtml += `
             <div class="resume-section" style="margin-bottom: 20px;">
-                <h2 style="font-size: 11pt; font-weight: bold; border-bottom: 1px solid #aaa; margin: 0 0 10px 0; padding-bottom: 2px; text-transform: uppercase;">Pengalaman Kerja</h2>
+                <h2 style="font-size: 11pt; font-weight: bold; color: #1e3a8a; border-bottom: 1px solid #93c5fd; margin: 0 0 10px 0; padding-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Pengalaman Kerja</h2>
         `;
         
         workData.forEach(item => {
             if (item.jawatan || item.lokasi || item.dari_hingga) {
-                // PAPARAN DALAM FORMAT WAJIB ATS KRONOLOGI TERBALIK:
+                // FORMAT ATS WAJIB KRONOLOGI TERBALIK:
                 // <Dari Tahun sehingga> - <Lokasi bekerja> - <Jawatan>
-                const formatLabel = `${item.dari_hingga || 'Tahun'} - ${item.lokasi || 'Syarikat/Lokasi'} - ${item.jawatan || 'Jawatan'}`;
+                const formatLabel = `<strong style="color: #0f172a;">${item.dari_hingga || 'Tahun'}</strong> &ndash; <span style="color: #475569;">${item.lokasi || 'Lokasi'}</span> &ndash; <strong style="color: #1e3a8a; font-family: 'Outfit', 'Arial', sans-serif;">${item.jawatan || 'Jawatan'}</strong>`;
                 
                 paperHtml += `
-                    <div class="resume-item" style="margin-bottom: 12px; font-size: 10pt;">
-                        <div style="font-weight: bold; margin-bottom: 4px; color: #000; font-size: 10pt;">
+                    <div class="resume-item" style="margin-bottom: 12px; font-size: 9.5pt;">
+                        <div style="margin-bottom: 4px;">
                             ${formatLabel}
                         </div>
-                        ${item.pencapaian ? `<p style="margin: 0 0 0 15px; text-align: justify; color: #333; font-size: 9.5pt; list-style-type: disc;">• ${item.pencapaian}</p>` : ''}
+                        ${item.pencapaian ? `<p style="margin: 0 0 0 12px; text-align: justify; color: #334155; font-size: 9pt; line-height: 1.4;">• ${item.pencapaian}</p>` : ''}
                     </div>
                 `;
             }
@@ -303,12 +376,12 @@ function updatePreview() {
     if (validCerts.length > 0) {
         paperHtml += `
             <div class="resume-section" style="margin-bottom: 20px;">
-                <h2 style="font-size: 11pt; font-weight: bold; border-bottom: 1px solid #aaa; margin: 0 0 10px 0; padding-bottom: 2px; text-transform: uppercase;">Sijil & Pentauliahan</h2>
-                <ul style="margin: 0; padding-left: 20px; font-size: 10pt;">
+                <h2 style="font-size: 11pt; font-weight: bold; color: #1e3a8a; border-bottom: 1px solid #93c5fd; margin: 0 0 10px 0; padding-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Sijil & Pentauliahan</h2>
+                <ul style="margin: 0; padding-left: 15px; font-size: 9.5pt; color: #334155;">
         `;
         
         validCerts.forEach(item => {
-            paperHtml += `<li style="margin-bottom: 4px;">${item.nama}</li>`;
+            paperHtml += `<li style="margin-bottom: 4px; line-height: 1.4;">${item.nama}</li>`;
         });
         
         paperHtml += `</ul></div>`;
@@ -318,31 +391,31 @@ function updatePreview() {
     if (kemahiran || bahasa || portfolio) {
         paperHtml += `
             <div class="resume-section" style="margin-bottom: 20px;">
-                <h2 style="font-size: 11pt; font-weight: bold; border-bottom: 1px solid #aaa; margin: 0 0 8px 0; padding-bottom: 2px; text-transform: uppercase;">Maklumat Tambahan</h2>
-                <table style="width: 100%; border-collapse: collapse; font-size: 10pt;">
+                <h2 style="font-size: 11pt; font-weight: bold; color: #1e3a8a; border-bottom: 1px solid #93c5fd; margin: 0 0 8px 0; padding-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Maklumat Tambahan</h2>
+                <table style="width: 100%; border-collapse: collapse; font-size: 9.5pt;">
         `;
         
         if (kemahiran) {
             paperHtml += `
                 <tr>
-                    <td style="width: 150px; font-weight: bold; vertical-align: top; padding: 2px 0;">Kemahiran:</td>
-                    <td style="padding: 2px 0; color: #222;">${kemahiran}</td>
+                    <td style="width: 150px; font-weight: bold; color: #0f172a; vertical-align: top; padding: 4px 0;">Kemahiran Utama:</td>
+                    <td style="padding: 4px 0; color: #334155; line-height: 1.4;">${kemahiran}</td>
                 </tr>
             `;
         }
         if (bahasa) {
             paperHtml += `
                 <tr>
-                    <td style="width: 150px; font-weight: bold; vertical-align: top; padding: 2px 0;">Bahasa:</td>
-                    <td style="padding: 2px 0; color: #222;">${bahasa}</td>
+                    <td style="width: 150px; font-weight: bold; color: #0f172a; vertical-align: top; padding: 4px 0;">Penguasaan Bahasa:</td>
+                    <td style="padding: 4px 0; color: #334155; line-height: 1.4;">${bahasa}</td>
                 </tr>
             `;
         }
         if (portfolio) {
             paperHtml += `
                 <tr>
-                    <td style="width: 150px; font-weight: bold; vertical-align: top; padding: 2px 0;">Pautan & Portfolio:</td>
-                    <td style="padding: 2px 0; color: #222;">${portfolio}</td>
+                    <td style="width: 150px; font-weight: bold; color: #0f172a; vertical-align: top; padding: 4px 0;">Pautan & Portfolio:</td>
+                    <td style="padding: 4px 0; color: #1e3a8a; font-weight: 500; line-height: 1.4;">${portfolio}</td>
                 </tr>
             `;
         }
@@ -389,7 +462,8 @@ function saveResumeData() {
         sijil: certData,
         kemahiran: kemahiran,
         bahasa: bahasa,
-        portfolio: portfolio
+        portfolio: portfolio,
+        gambar_base64: gambarBase64
     };
 
     // Tentukan Endpoint API sama ada mod Admin atau User biasa

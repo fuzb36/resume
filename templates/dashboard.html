@@ -56,6 +56,17 @@
                             <input type="text" id="input-nama" value="{{ resume.nama_penuh }}" oninput="updatePreview()" placeholder="Cth: Ahmad Haikal Bin Ramli" class="block w-full rounded-xl border border-slate-700 bg-slate-800/50 px-4 py-2.5 text-white text-sm focus:border-brand-500 focus:outline-none transition">
                         </div>
                         <div>
+                            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Foto Profil (Ukuran Pasport)</label>
+                            <div class="flex items-center gap-4">
+                                <input type="file" id="input-gambar" accept="image/*" onchange="handleImageUpload(event)" class="hidden">
+                                <button type="button" onclick="document.getElementById('input-gambar').click()" class="inline-flex h-9 items-center justify-center rounded-lg border border-slate-700 bg-slate-800 px-4 text-xs font-semibold text-white hover:bg-slate-700 transition">
+                                    Pilih Gambar
+                                </button>
+                                <span id="gambar-status" class="text-xs text-slate-500">Tiada gambar dipilih</span>
+                                <button type="button" id="btn-buang-gambar" onclick="clearImage()" class="text-xs text-rose-400 hover:text-rose-300 hidden">Buang</button>
+                            </div>
+                        </div>
+                        <div>
                             <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Nombor Kad Pengenalan (IC)</label>
                             <input type="text" id="input-ic" value="{{ resume.no_ic }}" oninput="updatePreview()" placeholder="Format: 991212-14-5679" class="block w-full rounded-xl border border-slate-700 bg-slate-800/50 px-4 py-2.5 text-white text-sm focus:border-brand-500 focus:outline-none transition">
                             <p id="ic-error" class="text-xs text-rose-400 mt-1 hidden">Format IC salah! Sila gunakan format: XXXXXX-XX-XXXX</p>
@@ -212,6 +223,7 @@
 <script id="server-data-edu" type="application/json">{{ resume.pendidikan|safe }}</script>
 <script id="server-data-work" type="application/json">{{ resume.pengalaman_kerja|safe }}</script>
 <script id="server-data-cert" type="application/json">{{ resume.sijil|safe }}</script>
+<script id="server-data-other" type="application/json">{{ resume.lain_lain|safe }}</script>
 {% if admin_mode %}
 <script>
     window.is_admin_mode = true;

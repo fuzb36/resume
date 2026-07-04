@@ -250,7 +250,8 @@ def save_resume():
         resume.lain_lain = json.dumps({
             "kemahiran": data.get('kemahiran', ''),
             "bahasa": data.get('bahasa', ''),
-            "portfolio": data.get('portfolio', '')
+            "portfolio": data.get('portfolio', ''),
+            "gambar_base64": data.get('gambar_base64', '')
         })
         resume.updated_at = datetime.now()
         resume.save()
@@ -316,7 +317,8 @@ def admin_save_resume(resume_id):
         resume.lain_lain = json.dumps({
             "kemahiran": data.get('kemahiran', ''),
             "bahasa": data.get('bahasa', ''),
-            "portfolio": data.get('portfolio', '')
+            "portfolio": data.get('portfolio', ''),
+            "gambar_base64": data.get('gambar_base64', '')
         })
         resume.updated_at = datetime.now()
         resume.save()
