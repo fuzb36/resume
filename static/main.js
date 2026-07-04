@@ -466,7 +466,7 @@ function updatePreview() {
         const rawText = `Permohonan ${jawatan || 'Jawatan'} di ${syarikat || 'Syarikat'}`;
         const uppercaseText = rawText.toUpperCase();
         permohonanHtml = `
-            <div style="text-align: center; font-size: 11pt; font-weight: 800; color: #1e3a8a; margin: 12px 0 16px 0; padding-bottom: 10px; border-bottom: 2px solid #1e3a8a; font-family: 'Outfit', 'Arial', sans-serif; letter-spacing: 0.5px;">
+            <div style="text-align: center; font-size: 11pt; font-weight: 800; color: #000000; margin: 12px 0 16px 0; padding-bottom: 10px; border-bottom: 2px solid #000000; font-family: 'Outfit', 'Arial', sans-serif; letter-spacing: 0.5px;">
                 ${uppercaseText}
             </div>
         `;
@@ -475,7 +475,7 @@ function updatePreview() {
     let headerHtml = "";
     if (gambarBase64) {
         headerHtml = `
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; border-bottom: 2px solid #1e3a8a; padding-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; border-bottom: 2px solid #000000; padding-bottom: 12px;">
                 <div style="flex-grow: 1; padding-right: 20px; text-align: left;">
                     <h1 style="font-size: 22pt; font-weight: 800; color: #0f172a; margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">${nama}</h1>
                     <div style="font-size: 9.5pt; color: #475569; margin-bottom: 6px;">
@@ -496,7 +496,7 @@ function updatePreview() {
         `;
     } else {
         headerHtml = `
-            <div style="text-align: center; margin-bottom: 12px; border-bottom: 2px solid #1e3a8a; padding-bottom: 12px;">
+            <div style="text-align: center; margin-bottom: 12px; border-bottom: 2px solid #000000; padding-bottom: 12px;">
                 <h1 style="font-size: 22pt; font-weight: 800; color: #0f172a; margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">${nama}</h1>
                 <div style="font-size: 9.5pt; color: #475569; margin-bottom: 6px;">
                     Nombor IC: <strong>${ic}</strong>
@@ -522,7 +522,7 @@ function updatePreview() {
 
             <!-- Ulasan Profesional -->
             <div class="resume-section" style="margin-bottom: 20px;">
-                <h2 style="font-size: 11pt; font-weight: bold; color: #1e3a8a; border-bottom: 1px solid #93c5fd; margin: 0 0 8px 0; padding-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Ulasan Profesional</h2>
+                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border-bottom: 2px solid #000000; margin: 0 0 8px 0; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Ulasan Profesional</h2>
                 <p style="margin: 0; text-align: justify; font-size: 9.5pt; color: #334155; line-height: 1.5;">${ulasan}</p>
             </div>
     `;
@@ -531,7 +531,7 @@ function updatePreview() {
     if (educationData.length > 0) {
         paperHtml += `
             <div class="resume-section" style="margin-bottom: 20px;">
-                <h2 style="font-size: 11pt; font-weight: bold; color: #1e3a8a; border-bottom: 1px solid #93c5fd; margin: 0 0 10px 0; padding-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Pendidikan</h2>
+                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border-bottom: 2px solid #000000; margin: 0 0 10px 0; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Pendidikan</h2>
         `;
         
         educationData.forEach(item => {
@@ -555,7 +555,7 @@ function updatePreview() {
     if (workData.length > 0) {
         paperHtml += `
             <div class="resume-section" style="margin-bottom: 20px;">
-                <h2 style="font-size: 11pt; font-weight: bold; color: #1e3a8a; border-bottom: 1px solid #93c5fd; margin: 0 0 10px 0; padding-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Pengalaman Kerja</h2>
+                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border-bottom: 2px solid #000000; margin: 0 0 10px 0; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Pengalaman Kerja</h2>
         `;
         
         workData.forEach(item => {
@@ -583,7 +583,7 @@ function updatePreview() {
     if (validCerts.length > 0) {
         paperHtml += `
             <div class="resume-section" style="margin-bottom: 20px;">
-                <h2 style="font-size: 11pt; font-weight: bold; color: #1e3a8a; border-bottom: 1px solid #93c5fd; margin: 0 0 10px 0; padding-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Sijil & Pentauliahan</h2>
+                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border-bottom: 2px solid #000000; margin: 0 0 10px 0; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Sijil & Pentauliahan</h2>
                 <ul style="margin: 0; padding-left: 15px; font-size: 9.5pt; color: #334155;">
         `;
         
@@ -598,7 +598,7 @@ function updatePreview() {
     if (kemahiran || bahasa || portfolio) {
         paperHtml += `
             <div class="resume-section" style="margin-bottom: 20px;">
-                <h2 style="font-size: 11pt; font-weight: bold; color: #1e3a8a; border-bottom: 1px solid #93c5fd; margin: 0 0 8px 0; padding-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Maklumat Tambahan</h2>
+                <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border-bottom: 2px solid #000000; margin: 0 0 8px 0; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Maklumat Tambahan</h2>
                 <table style="width: 100%; border-collapse: collapse; font-size: 9.5pt;">
         `;
         

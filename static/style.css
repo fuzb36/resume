@@ -219,10 +219,10 @@ body {
 }
 
 /* ==========================================
-   GAYA KOTAK RESUME A4 YANG MENARIK (BINGKAI PENUH & MARGIN 0.5 INCI)
+   GAYA KOTAK RESUME A4 (BINGKAI HITAM PENUH & MARGIN 0.5 INCI)
    ========================================== */
 #ats-resume-paper {
-    border: 2px solid #1e3a8a !important; /* Bingkai penuh di sekeliling seluruh page */
+    border: 2px solid #000000 !important; /* Bingkai hitam penuh di sekeliling seluruh page */
     background-color: #ffffff !important;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4) !important;
     transition: all 0.3s ease;
@@ -234,29 +234,31 @@ body {
     padding: 0.5in !important;
 }
 
-/* Seksyen Heading dengan Aksen Garisan Sisi Kiri */
+/* Seksyen Heading — Garis Bawah Hitam di bawah sub-topik */
 #ats-resume-paper .resume-section h2 {
-    border-left: 3.5px solid #1e3a8a !important;
-    border-bottom: none !important;
-    padding-left: 10px !important;
+    border-left: none !important;
+    border-bottom: 2px solid #000000 !important;
+    padding-left: 0 !important;
+    padding-bottom: 4px !important;
     font-family: 'Outfit', 'Arial', sans-serif !important;
     letter-spacing: 0.5px !important;
 }
 
 #ats-resume-paper.theme-futuristic {
-    border: 2px solid #00f2fe !important; /* Bingkai penuh tema futuristik */
+    border: 2px solid #00f2fe !important; /* Bingkai tema futuristik */
 }
 
 #ats-resume-paper.theme-futuristic .resume-section h2 {
-    border-left: 3.5px solid #00f2fe !important;
-    border-bottom: none !important;
-    padding-left: 10px !important;
+    border-left: none !important;
+    border-bottom: 2px solid #00f2fe !important;
+    padding-left: 0 !important;
+    padding-bottom: 4px !important;
 }
 
-/* TAPAN BINGKAI DAN MARGIN SEMASA CETAK/PDF */
+/* BINGKAI DAN MARGIN SEMASA CETAK/PDF */
 @media print {
     #ats-resume-paper {
-        border: 2px solid #1e3a8a !important; /* Kekalkan bingkai penuh semasa print */
+        border: 2px solid #000000 !important; /* Bingkai hitam penuh semasa print */
         margin: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
@@ -268,8 +270,9 @@ body {
         padding: 0.5in !important; /* Kekalkan margin 0.5 inci semasa print */
     }
     #ats-resume-paper .resume-section h2 {
-        border-left: 3.5px solid #1e3a8a !important;
-        border-bottom: none !important;
-        padding-left: 10px !important;
+        border-left: none !important;
+        border-bottom: 2px solid #000000 !important;
+        padding-left: 0 !important;
+        padding-bottom: 4px !important;
     }
 }
