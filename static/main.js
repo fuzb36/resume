@@ -6,6 +6,62 @@ let workData = [];
 let certData = [];
 let gambarBase64 = "";
 
+// ==========================================
+// LOGIK DRAG AND DROP (REORDERING)
+// ==========================================
+let draggedIndex = null;
+let dragType = null;
+
+function setDraggable(handleEl, canDrag) {
+    const card = handleEl.closest('.draggable-card');
+    if (card) {
+        card.setAttribute('draggable', canDrag ? 'true' : 'false');
+    }
+}
+
+function dragStart(event, index, type) {
+    draggedIndex = index;
+    dragType = type;
+    event.dataTransfer.effectAllowed = 'move';
+    setTimeout(() => {
+        event.target.classList.add('opacity-30', 'border-brand-500');
+    }, 0);
+}
+
+function dragOver(event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+}
+
+function drop(event, targetIndex, type) {
+    event.preventDefault();
+    if (dragType !== type || draggedIndex === null || draggedIndex === targetIndex) return;
+    
+    let arr;
+    if (type === 'edu') arr = educationData;
+    else if (type === 'work') arr = workData;
+    else if (type === 'cert') arr = certData;
+    
+    if (!arr) return;
+    
+    // Pindahkan item dalam array
+    const [movedItem] = arr.splice(draggedIndex, 1);
+    arr.splice(targetIndex, 0, movedItem);
+    
+    // Render semula borang yang terjejas
+    if (type === 'edu') renderEduForm();
+    else if (type === 'work') renderWorkForm();
+    else if (type === 'cert') renderCertForm();
+    
+    updatePreview();
+}
+
+function dragEnd(event) {
+    event.target.classList.remove('opacity-30', 'border-brand-500');
+    draggedIndex = null;
+    dragType = null;
+}
+
 // Muat data dari server semasa fail dimulakan
 document.addEventListener("DOMContentLoaded", () => {
     try {
@@ -101,27 +157,42 @@ function renderEduForm() {
     
     educationData.forEach((item, index) => {
         const div = document.createElement("div");
-        div.className = "p-4 bg-slate-800/40 rounded-xl border border-slate-700/60 relative space-y-3";
+        div.className = "draggable-card p-4 bg-slate-800/40 rounded-xl border border-slate-700/60 relative flex gap-3 items-start transition";
+        div.setAttribute("draggable", "false");
+        div.setAttribute("ondragstart", `dragStart(event, ${index}, 'edu')`);
+        div.setAttribute("ondragover", "dragOver(event)");
+        div.setAttribute("ondrop", `drop(event, ${index}, 'edu')`);
+        div.setAttribute("ondragend", "dragEnd(event)");
+        
         div.innerHTML = `
-            <button type="button" onclick="removeEduItem(${index})" class="absolute top-3 right-3 text-slate-500 hover:text-rose-400 text-xs">Padam</button>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div>
-                    <label class="block text-[10px] font-semibold text-slate-400 uppercase">Institusi (Sekolah/Universiti)</label>
-                    <input type="text" value="${item.institusi || ''}" oninput="updateEduItem(${index}, 'institusi', this.value)" placeholder="Cth: Universiti Malaya" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
-                </div>
-                <div>
-                    <label class="block text-[10px] font-semibold text-slate-400 uppercase">Bidang Pengajian</label>
-                    <input type="text" value="${item.bidang || ''}" oninput="updateEduItem(${index}, 'bidang', this.value)" placeholder="Cth: Ijazah Sarjana Muda Sains Komputer" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
-                </div>
+            <!-- Drag Handle -->
+            <div onmouseenter="setDraggable(this, true)" onmouseleave="setDraggable(this, false)" class="cursor-grab active:cursor-grabbing text-slate-500 hover:text-slate-300 transition shrink-0 p-1 mt-1">
+                <svg class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
             </div>
-            <div class="grid grid-cols-2 gap-3">
-                <div>
-                    <label class="block text-[10px] font-semibold text-slate-400 uppercase">Tahun Mula</label>
-                    <input type="text" value="${item.tahun_mula || ''}" oninput="updateEduItem(${index}, 'tahun_mula', this.value)" placeholder="Cth: 2018" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
+            
+            <div class="flex-grow space-y-3">
+                <button type="button" onclick="removeEduItem(${index})" class="absolute top-3 right-3 text-slate-500 hover:text-rose-400 text-xs">Padam</button>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[10px] font-semibold text-slate-400 uppercase">Institusi (Sekolah/Universiti)</label>
+                        <input type="text" value="${item.institusi || ''}" oninput="updateEduItem(${index}, 'institusi', this.value)" placeholder="Cth: Universiti Malaya" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-semibold text-slate-400 uppercase">Bidang Pengajian</label>
+                        <input type="text" value="${item.bidang || ''}" oninput="updateEduItem(${index}, 'bidang', this.value)" placeholder="Cth: Ijazah Sarjana Muda Sains Komputer" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-[10px] font-semibold text-slate-400 uppercase">Tahun Tamat</label>
-                    <input type="text" value="${item.tahun_tamat || ''}" oninput="updateEduItem(${index}, 'tahun_tamat', this.value)" placeholder="Cth: 2022" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[10px] font-semibold text-slate-400 uppercase">Tahun Mula</label>
+                        <input type="text" value="${item.tahun_mula || ''}" oninput="updateEduItem(${index}, 'tahun_mula', this.value)" placeholder="Cth: 2018" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-semibold text-slate-400 uppercase">Tahun Tamat</label>
+                        <input type="text" value="${item.tahun_tamat || ''}" oninput="updateEduItem(${index}, 'tahun_tamat', this.value)" placeholder="Cth: 2022" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
+                    </div>
                 </div>
             </div>
         `;
@@ -155,27 +226,42 @@ function renderWorkForm() {
     
     workData.forEach((item, index) => {
         const div = document.createElement("div");
-        div.className = "p-4 bg-slate-800/40 rounded-xl border border-slate-700/60 relative space-y-3";
+        div.className = "draggable-card p-4 bg-slate-800/40 rounded-xl border border-slate-700/60 relative flex gap-3 items-start transition";
+        div.setAttribute("draggable", "false");
+        div.setAttribute("ondragstart", `dragStart(event, ${index}, 'work')`);
+        div.setAttribute("ondragover", "dragOver(event)");
+        div.setAttribute("ondrop", `drop(event, ${index}, 'work')`);
+        div.setAttribute("ondragend", "dragEnd(event)");
+        
         div.innerHTML = `
-            <button type="button" onclick="removeWorkItem(${index})" class="absolute top-3 right-3 text-slate-500 hover:text-rose-400 text-xs">Padam</button>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div>
-                    <label class="block text-[10px] font-semibold text-slate-400 uppercase">Jawatan Pekerjaan</label>
-                    <input type="text" value="${item.jawatan || ''}" oninput="updateWorkItem(${index}, 'jawatan', this.value)" placeholder="Cth: Senior Software Engineer" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
-                </div>
-                <div>
-                    <label class="block text-[10px] font-semibold text-slate-400 uppercase">Syarikat & Lokasi Bekerja</label>
-                    <input type="text" value="${item.lokasi || ''}" oninput="updateWorkItem(${index}, 'lokasi', this.value)" placeholder="Cth: Tech Solutions Sdn Bhd, Kuala Lumpur" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
-                </div>
+            <!-- Drag Handle -->
+            <div onmouseenter="setDraggable(this, true)" onmouseleave="setDraggable(this, false)" class="cursor-grab active:cursor-grabbing text-slate-500 hover:text-slate-300 transition shrink-0 p-1 mt-1">
+                <svg class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
             </div>
-            <div class="grid grid-cols-1 gap-3">
-                <div>
-                    <label class="block text-[10px] font-semibold text-slate-400 uppercase">Tempoh Waktu (Dari Tahun sehingga)</label>
-                    <input type="text" value="${item.dari_hingga || ''}" oninput="updateWorkItem(${index}, 'dari_hingga', this.value)" placeholder="Cth: 2022 - Kini atau 2020 - 2022" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
+            
+            <div class="flex-grow space-y-3">
+                <button type="button" onclick="removeWorkItem(${index})" class="absolute top-3 right-3 text-slate-500 hover:text-rose-400 text-xs">Padam</button>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[10px] font-semibold text-slate-400 uppercase">Jawatan Pekerjaan</label>
+                        <input type="text" value="${item.jawatan || ''}" oninput="updateWorkItem(${index}, 'jawatan', this.value)" placeholder="Cth: Senior Software Engineer" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-semibold text-slate-400 uppercase">Syarikat & Lokasi Bekerja</label>
+                        <input type="text" value="${item.lokasi || ''}" oninput="updateWorkItem(${index}, 'lokasi', this.value)" placeholder="Cth: Tech Solutions Sdn Bhd, Kuala Lumpur" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-[10px] font-semibold text-slate-400 uppercase">Tanggungjawab / Pencapaian Utama</label>
-                    <textarea rows="2" oninput="updateWorkItem(${index}, 'pencapaian', this.value)" placeholder="Cth: Membina API backend menggunakan Python yang mengurangkan masa tindak balas pelayan sebanyak 30%." class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">${item.pencapaian || ''}</textarea>
+                <div class="grid grid-cols-1 gap-3">
+                    <div>
+                        <label class="block text-[10px] font-semibold text-slate-400 uppercase">Tempoh Waktu (Dari Tahun sehingga)</label>
+                        <input type="text" value="${item.dari_hingga || ''}" oninput="updateWorkItem(${index}, 'dari_hingga', this.value)" placeholder="Cth: 2022 - Kini atau 2020 - 2022" class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-semibold text-slate-400 uppercase">Tanggungjawab / Pencapaian Utama</label>
+                        <textarea rows="2" oninput="updateWorkItem(${index}, 'pencapaian', this.value)" placeholder="Cth: Membina API backend menggunakan Python yang mengurangkan masa tindak balas pelayan sebanyak 30%." class="block w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">${item.pencapaian || ''}</textarea>
+                    </div>
                 </div>
             </div>
         `;
@@ -209,8 +295,20 @@ function renderCertForm() {
     
     certData.forEach((item, index) => {
         const div = document.createElement("div");
-        div.className = "flex items-center gap-2";
+        div.className = "draggable-card flex items-center gap-2 bg-slate-800/20 p-2 rounded-xl border border-slate-700/40 transition";
+        div.setAttribute("draggable", "false");
+        div.setAttribute("ondragstart", `dragStart(event, ${index}, 'cert')`);
+        div.setAttribute("ondragover", "dragOver(event)");
+        div.setAttribute("ondrop", `drop(event, ${index}, 'cert')`);
+        div.setAttribute("ondragend", "dragEnd(event)");
+        
         div.innerHTML = `
+            <!-- Drag Handle -->
+            <div onmouseenter="setDraggable(this, true)" onmouseleave="setDraggable(this, false)" class="cursor-grab active:cursor-grabbing text-slate-500 hover:text-slate-300 transition shrink-0 px-2 py-1">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </div>
             <input type="text" value="${item.nama || ''}" oninput="updateCertItem(${index}, this.value)" placeholder="Cth: AWS Certified Cloud Practitioner (2024)" class="block flex-grow rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-white text-xs focus:outline-none focus:border-brand-500 transition">
             <button type="button" onclick="removeCertItem(${index})" class="text-xs text-rose-400 hover:text-rose-300 px-2">Padam</button>
         `;
