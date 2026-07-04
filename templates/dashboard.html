@@ -7,10 +7,10 @@
 {% endblock %}
 
 {% block content %}
-<div class="flex-grow flex flex-col no-print bg-slate-950">
+<div class="flex-grow flex flex-col bg-slate-950">
     <!-- Admin Header Banner if in Admin Mode -->
     {% if admin_mode %}
-        <div class="w-full bg-purple-900/60 border-b border-purple-500/20 px-4 py-3 flex items-center justify-between">
+        <div class="w-full bg-purple-900/60 border-b border-purple-500/20 px-4 py-3 flex items-center justify-between no-print">
             <div class="flex items-center gap-3">
                 <span class="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-purple-500 animate-pulse"></span>
                 <span class="text-sm font-semibold text-purple-200">Mod Pentadbir: Menyunting resume milik <strong class="text-white">{{ resume.user.username }}</strong></span>

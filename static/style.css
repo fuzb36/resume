@@ -39,8 +39,7 @@ body {
     /* Set semula grid layout untuk memaparkan panel preview sahaja */
     div[class*="lg:grid-cols-2"] {
         display: block !important;
-        grid-template-cols: none !important;
-        divide-x: none !important;
+        grid-template-columns: none !important;
         height: auto !important;
         overflow: visible !important;
     }
