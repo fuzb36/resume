@@ -131,10 +131,6 @@ body {
     color: #cbd5e1 !important;
 }
 
-#ats-resume-paper.theme-futuristic [style*="border-bottom: 2px solid #000000"] {
-    border-bottom: 2px solid #00f2fe !important;
-    box-shadow: 0 2px 8px rgba(0, 242, 254, 0.2);
-}
 
 #ats-resume-paper.theme-futuristic strong {
     color: #38bdf8 !important;
@@ -230,37 +226,24 @@ body {
     padding: 0.5in !important;
 }
 
-/* Seksyen Heading — GARIS PENDEK HITAM di bawah sub-topik */
+/* Seksyen Heading — text-underline-position hitam */
 #ats-resume-paper .resume-section h2 {
     border: none !important;
     padding-left: 0 !important;
-    padding-bottom: 6px !important;
+    padding-bottom: 2px !important;
     margin-bottom: 10px !important;
     font-family: 'Outfit', 'Arial', sans-serif !important;
     letter-spacing: 0.5px !important;
-    position: relative;
-    display: inline-block;
-    width: 100%;
+    text-decoration: underline !important;
+    text-decoration-color: #000000 !important;
+    text-decoration-thickness: 2px !important;
+    text-underline-position: under !important;
+    text-decoration-skip-ink: none !important;
 }
 
-/* Garis pendek hitam di bawah sub-topik menggunakan pseudo-element */
-#ats-resume-paper .resume-section h2::after {
-    content: "";
-    display: block;
-    width: 45px;
-    height: 2px;
-    background-color: #000000;
-    margin-top: 4px;
-}
-
-/* Futuristik — garis pendek mengikut warna tema */
+/* Futuristik — tiada perubahan pada underline */
 #ats-resume-paper.theme-futuristic {
     border: 2px solid #00f2fe !important;
-}
-
-#ats-resume-paper.theme-futuristic .resume-section h2::after {
-    background-color: #00f2fe;
-    box-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
 }
 
 /* BINGKAI DAN MARGIN SEMASA CETAK/PDF */
@@ -280,9 +263,9 @@ body {
     #ats-resume-paper .resume-section h2 {
         border: none !important;
         padding-left: 0 !important;
-    }
-    #ats-resume-paper .resume-section h2::after {
-        background-color: #000000;
-        box-shadow: none;
+        text-decoration: underline !important;
+        text-decoration-color: #000000 !important;
+        text-decoration-thickness: 2px !important;
+        text-underline-position: under !important;
     }
 }
