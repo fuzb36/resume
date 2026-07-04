@@ -128,7 +128,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
         const certRaw = document.getElementById("server-data-cert").textContent;
-        certData = certRaw ? JSON.parse(certRaw) : [];
+        const rawCerts = certRaw ? JSON.parse(certRaw) : [];
+        // Migration: tukar format lama { nama: "Sijil (2024)" } ke format baru { nama: "Sijil", tahun: "2024" }
+        certData = rawCerts.map(item => {
+            if (typeof item === 'string') {
+                return { nama: item, tahun: "" };
+            }
+            if (!item.tahun) {
+                // Cuba ekstrak tahun dari kurungan di hujung nama
+                const match = item.nama ? item.nama.match(/^(.+?)\s*\((\d{4}(?:\s*[-–]\s*\d{4})?)\)\s*$/) : null;
+                if (match) {
+                    return { nama: match[1].trim(), tahun: match[2].trim() };
+                }
+                return { nama: item.nama || "", tahun: "" };
+            }
+            return item;
+        });
     } catch (e) { certData = []; }
 
     try {
@@ -588,26 +603,25 @@ function updatePreview() {
     }
 
     // Sijil
-    const validCerts = certData.filter(c => c.nama.trim() !== "");
+    const validCerts = certData.filter(c => c.nama && c.nama.trim() !== "");
     if (validCerts.length > 0) {
         paperHtml += `
             <div class="resume-section" style="margin-bottom: 20px;">
                 <h2 style="font-size: 11pt; font-weight: bold; color: #000000; border: none; margin: 0 0 10px 0; padding-bottom: 0; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Outfit', 'Arial', sans-serif;">Sijil &amp; Pentauliahan</h2>
-                <ul style="margin: 0; padding-left: 15px; font-size: 9.5pt; color: #334155;">
+                <div style="font-size: 9.5pt; color: #334155;">
         `;
         
         validCerts.forEach(item => {
-            // Format: 'tahun - nama' tanpa kurungan
-            let displayName;
+            let displayLine;
             if (item.tahun && item.tahun.trim()) {
-                displayName = `<span style="font-weight: bold; color: #0f172a;">${item.tahun.trim()}</span> - ${item.nama}`;
+                displayLine = `<span style="font-weight: bold; color: #0f172a; min-width: 50px; display: inline-block;">${item.tahun.trim()}</span> - ${item.nama.trim()}`;
             } else {
-                displayName = item.nama;
+                displayLine = item.nama.trim();
             }
-            paperHtml += `<li style="margin-bottom: 4px; line-height: 1.5;">${displayName}</li>`;
+            paperHtml += `<div style="margin-bottom: 4px; line-height: 1.5; padding-left: 0;">${displayLine}</div>`;
         });
         
-        paperHtml += `</ul></div>`;
+        paperHtml += `</div></div>`;
     }
 
     // Kemahiran & Lain-lain
