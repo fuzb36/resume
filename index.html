@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ms" class="h-full bg-slate-950 text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS Resume Builder - Launcher</title>
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        outfit: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            200: '#bae0fd',
+                            300: '#7cc8fc',
+                            400: '#38acf8',
+                            500: '#0e91e9',
+                            600: '#0273c7',
+                            700: '#035ca2',
+                            800: '#074e85',
+                            900: '#0c426e',
+                            950: '#082a4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glow-effect {
+            box-shadow: 0 0 40px -5px rgba(14, 145, 233, 0.15);
+        }
+        .glow-btn {
+            box-shadow: 0 0 20px 0 rgba(14, 145, 233, 0.3);
+        }
+        .glow-btn:hover {
+            box-shadow: 0 0 30px 5px rgba(14, 145, 233, 0.5);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen font-sans antialiased text-slate-200 justify-between relative overflow-hidden">
+    
+    <!-- Background Glows -->
+    <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+        <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-brand-600 to-indigo-600 opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="flex-grow flex flex-col justify-center items-center px-4 py-12 sm:px-6 lg:px-8 z-10">
+        <div class="max-w-2xl w-full space-y-8 text-center">
+            
+            <!-- Logo & Brand Header -->
+            <div class="space-y-4">
+                <div class="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-600 shadow-xl shadow-brand-500/20 mb-2">
+                    <svg class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                </div>
+                <h1 class="font-outfit text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+                    ATS <span class="bg-gradient-to-r from-brand-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">Resume Builder</span>
+                </h1>
+                <p class="text-slate-400 max-w-md mx-auto text-sm sm:text-base">
+                    Pelancar aplikasi web pembina resume pintar yang dioptimumkan untuk melepasi tapisan ATS majikan.
+                </p>
+            </div>
+
+            <!-- Server Status & Action Card -->
+            <div class="bg-slate-900/60 border border-slate-800/80 rounded-3xl p-6 sm:p-8 backdrop-blur-md glow-effect space-y-6">
+                
+                <!-- Status Badge -->
+                <div class="flex justify-center items-center gap-3">
+                    <span class="text-xs uppercase tracking-widest text-slate-500 font-semibold">Status Pelayan:</span>
+                    <div id="status-badge" class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold bg-amber-500/10 border border-amber-500/20 text-amber-400">
+                        <span id="status-dot" class="flex h-2 w-2 rounded-full bg-amber-400 animate-pulse"></span>
+                        <span id="status-text">Menyemak status...</span>
+                    </div>
+                </div>
+
+                <!-- Launch Button -->
+                <div class="py-2">
+                    <a id="launch-btn" href="http://127.0.0.1:5000" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-brand-600 to-indigo-600 px-8 py-4 text-lg font-bold text-white shadow-lg transition duration-300 opacity-60 pointer-events-none hover:from-brand-500 hover:to-indigo-500 cursor-not-allowed">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        Buka Aplikasi Web
+                    </a>
+                </div>
+
+                <!-- Start Guide Section -->
+                <div id="startup-instructions" class="border-t border-slate-800/60 pt-6 space-y-4">
+                    <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider text-left">Cara Memulakan Pelayan Lokal</h3>
+                    <p class="text-xs text-slate-400 text-left">Sila jalankan arahan di bawah dalam terminal di direktori projek ini untuk memulakan pelayan Flask:</p>
+                    
+                    <!-- Code block to copy -->
+                    <div class="flex items-center justify-between bg-slate-950 border border-slate-800 rounded-xl p-3.5 font-mono text-xs sm:text-sm text-brand-300 relative group overflow-hidden">
+                        <span id="cmd-text">python app.py</span>
+                        <button onclick="copyCommand()" class="text-slate-500 hover:text-white transition flex items-center gap-1.5 focus:outline-none" title="Salin arahan">
+                            <svg id="copy-icon" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                            </svg>
+                            <span id="copy-text" class="text-xs">Salin</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Seeded Account Details -->
+                <div class="border-t border-slate-800/60 pt-6 space-y-3">
+                    <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider text-left">Akaun Contoh Ujian (Database Seeded)</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+                        <div class="p-3.5 bg-slate-950/50 border border-slate-800/50 rounded-xl">
+                            <span class="font-bold text-brand-400 text-xs uppercase tracking-wider">Peranan: User (Biasa)</span>
+                            <div class="mt-1 text-xs text-slate-400 space-y-0.5">
+                                <div>Nama: <code class="text-white bg-slate-850 px-1 rounded">user</code></div>
+                                <div>Kunci: <code class="text-white bg-slate-850 px-1 rounded">user123</code></div>
+                            </div>
+                        </div>
+                        <div class="p-3.5 bg-slate-950/50 border border-slate-800/50 rounded-xl">
+                            <span class="font-bold text-purple-400 text-xs uppercase tracking-wider">Peranan: Admin (Pengurus)</span>
+                            <div class="mt-1 text-xs text-slate-400 space-y-0.5">
+                                <div>Nama: <code class="text-white bg-slate-850 px-1 rounded">admin</code></div>
+                                <div>Kunci: <code class="text-white bg-slate-850 px-1 rounded">admin123</code></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500 z-10">
+        <p>&copy; 2026 ATS Resume Builder. Hak Cipta Terpelihara.</p>
+    </footer>
+
+    <!-- JavaScript logic -->
+    <script>
+        const LAUNCH_URL = 'http://127.0.0.1:5000';
+        const badge = document.getElementById('status-badge');
+        const dot = document.getElementById('status-dot');
+        const text = document.getElementById('status-text');
+        const btn = document.getElementById('launch-btn');
+        const inst = document.getElementById('startup-instructions');
+
+        function checkServer() {
+            // Menggunakan fetch dengan mode no-cors untuk mengelakkan isu CORS
+            fetch(LAUNCH_URL, { mode: 'no-cors' })
+                .then(() => {
+                    // Berjaya bersambung ke pelayan Flask
+                    badge.className = 'inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold bg-emerald-500/10 border border-emerald-500/20 text-emerald-400';
+                    dot.className = 'flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse';
+                    text.innerText = 'PELAYAN AKTIF (ONLINE)';
+                    
+                    // Aktifkan butang Buka Aplikasi
+                    btn.className = 'w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-brand-600 to-indigo-600 px-8 py-4 text-lg font-bold text-white shadow-lg transition duration-300 hover:from-brand-500 hover:to-indigo-500 glow-btn transform hover:-translate-y-0.5';
+                    btn.style.pointerEvents = 'auto';
+                    btn.style.cursor = 'pointer';
+
+                    // Sembunyikan arahan permulaan secara lembut kerana pelayan sudah aktif
+                    inst.style.opacity = '0.3';
+                })
+                .catch(() => {
+                    // Gagal bersambung (Server belum dimulakan)
+                    badge.className = 'inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold bg-rose-500/10 border border-rose-500/20 text-rose-400';
+                    dot.className = 'flex h-2 w-2 rounded-full bg-rose-400';
+                    text.innerText = 'PELAYAN MATI (OFFLINE)';
+                    
+                    // Nyahaktifkan butang Buka Aplikasi
+                    btn.className = 'w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-brand-600 to-indigo-600 px-8 py-4 text-lg font-bold text-white shadow-lg transition duration-300 opacity-50 pointer-events-none cursor-not-allowed';
+                    btn.style.pointerEvents = 'none';
+                    btn.style.cursor = 'not-allowed';
+
+                    // Tunjukkan arahan permulaan dengan jelas
+                    inst.style.opacity = '1';
+                });
+        }
+
+        // Semak status pelayan setiap 2 saat
+        checkServer();
+        setInterval(checkServer, 2000);
+
+        // Fungsi menyalin arahan terminal
+        function copyCommand() {
+            const cmdText = document.getElementById('cmd-text').innerText;
+            const copyIcon = document.getElementById('copy-icon');
+            const copyText = document.getElementById('copy-text');
+
+            navigator.clipboard.writeText(cmdText).then(() => {
+                // Tunjukkan maklumbalas salinan berjaya
+                copyText.innerText = 'Disalin!';
+                copyText.className = 'text-xs text-emerald-400';
+                copyIcon.className = 'h-5 w-5 text-emerald-400';
+                
+                // Set semula selepas 2 saat
+                setTimeout(() => {
+                    copyText.innerText = 'Salin';
+                    copyText.className = 'text-xs text-slate-500';
+                    copyIcon.className = 'h-5 w-5 text-slate-500';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
