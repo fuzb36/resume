@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ms" class="h-full bg-slate-950 text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Masuk - ATS Resume Builder</title>
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        outfit: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            200: '#bae0fd',
+                            300: '#7cc8fc',
+                            400: '#38acf8',
+                            500: '#0e91e9',
+                            600: '#0273c7',
+                            700: '#035ca2',
+                            800: '#074e85',
+                            900: '#0c426e',
+                            950: '#082a4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="static/style.css">
+    <!-- Auth script logic -->
+    <script src="static/auth.js"></script>
+</head>
+<body class="flex flex-col min-h-screen font-sans antialiased text-slate-200">
+    
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 w-full border-b border-slate-800 bg-slate-900/80 backdrop-blur-md transition-all duration-300 no-print">
+        <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-600 shadow-lg shadow-brand-500/20">
+                        <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <span class="font-outfit text-xl font-bold tracking-tight text-white">ATS<span class="bg-gradient-to-r from-brand-400 to-indigo-400 bg-clip-text text-transparent">Resume</span></span>
+                </a>
+            </div>
+            
+            <nav id="navbar-links" class="flex items-center gap-4">
+                <!-- Dijana secara dinamik oleh auth.js -->
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+        <!-- Glowing background blur -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 h-72 w-72 rounded-full bg-brand-500/10 blur-3xl"></div>
+        
+        <div class="sm:mx-auto w-full max-w-md">
+            <h2 class="text-center font-outfit text-3xl font-extrabold tracking-tight text-white">
+                Log Masuk Akaun Anda
+            </h2>
+            <p class="mt-2 text-center text-sm text-slate-400">
+                Atau
+                <a href="register.html" class="font-semibold text-brand-400 hover:text-brand-300 transition">
+                    daftar akaun baharu di sini
+                </a>
+            </p>
+        </div>
+
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            <div class="border border-slate-800 bg-slate-900/60 backdrop-blur-md px-6 py-8 shadow-xl rounded-2xl sm:px-10">
+                
+                <!-- Error Alert Box -->
+                <div id="error-message" class="hidden mb-6 flex items-center gap-3 rounded-xl p-4 text-sm bg-rose-500/10 border border-rose-500/20 text-rose-400">
+                    <svg class="h-5 w-5 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                    </svg>
+                    <span id="error-text">Nama pengguna atau kata laluan salah!</span>
+                </div>
+
+                <form class="space-y-6" id="login-form">
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-slate-300">
+                            Nama Pengguna
+                        </label>
+                        <div class="mt-1">
+                            <input id="username" type="text" required
+                                class="block w-full rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-white placeholder-slate-500 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 text-sm transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-slate-300">
+                            Kata Laluan
+                        </label>
+                        <div class="mt-1">
+                            <input id="password" type="password" required
+                                class="block w-full rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-3 text-white placeholder-slate-500 shadow-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 text-sm transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit"
+                            class="flex w-full justify-center rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 px-4 py-3.5 text-sm font-semibold text-white shadow-lg shadow-brand-500/10 hover:from-brand-500 hover:to-indigo-500 hover:shadow-brand-500/20 transition focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-slate-900">
+                            Log Masuk
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Test Accounts Hint -->
+                <div class="mt-8 border-t border-slate-800 pt-6">
+                    <p class="text-xs text-slate-500 text-center mb-3">Gunakan akaun contoh untuk mencuba dengan cepat:</p>
+                    <div class="grid grid-cols-2 gap-3 text-xs">
+                        <div class="bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/50">
+                            <span class="font-bold text-brand-400">Akaun Pengguna:</span><br>
+                            Username: <code class="text-slate-300">user</code><br>
+                            Password: <code class="text-slate-300">user123</code>
+                        </div>
+                        <div class="bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/50">
+                            <span class="font-bold text-purple-400">Akaun Admin:</span><br>
+                            Username: <code class="text-slate-300">admin</code><br>
+                            Password: <code class="text-slate-300">admin123</code>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500 no-print">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <p>&copy; 2026 ATS Resume Builder. Dibina secara pintar untuk memaksimumkan peluang kerjaya anda.</p>
+        </div>
+    </footer>
+
+    <!-- Form Submit Handler -->
+    <script>
+        // Redirect if already logged in
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+            window.location.href = currentUser.role === 'admin' ? 'admin.html' : 'dashboard.html';
+        }
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim().toLowerCase();
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('error-message');
+            const errorText = document.getElementById('error-text');
+
+            if (!username || !password) {
+                errorText.innerText = 'Sila isi semua ruangan!';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('static_users') || '[]');
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                // Redirect depending on user role
+                if (user.role === 'admin') {
+                    window.location.href = 'admin.html';
+                } else {
+                    window.location.href = 'dashboard.html';
+                }
+            } else {
+                errorText.innerText = 'Nama pengguna atau kata laluan salah!';
+                errorDiv.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -667,7 +667,7 @@ function updatePreview() {
 }
 
 // ==========================================
-// SIMPAN DATA RESUME (AJAX POST)
+// SIMPAN DATA RESUME (LOCALSTORAGE SAVE)
 // ==========================================
 function saveResumeData() {
     const nama = document.getElementById("input-nama").value;
@@ -688,6 +688,8 @@ function saveResumeData() {
     }
 
     const payload = {
+        id: window.resume_id,
+        user_id: window.resume_id,
         nama_penuh: nama,
         no_ic: ic,
         email: email,
@@ -703,41 +705,24 @@ function saveResumeData() {
         gambar_base64: gambarBase64
     };
 
-    // Tentukan Endpoint API sama ada mod Admin atau User biasa
-    let apiEndpoint = "/api/resume/save";
-    if (window.is_admin_mode && window.resume_id) {
-        apiEndpoint = `/api/admin/resume/save/${window.resume_id}`;
-    }
-
     // Hantar request
     const btn = document.getElementById("btn-save");
     btn.disabled = true;
     btn.textContent = "Menyimpan...";
 
-    fetch(apiEndpoint, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-    })
-    .then(response => response.json())
-    .then(data => {
-        btn.disabled = false;
-        btn.textContent = window.is_admin_mode ? "Simpan (Admin)" : "Simpan Data";
-        
-        if (data.status === "success") {
-            alert(data.message);
-        } else {
-            alert("Ralat: " + data.message);
+    setTimeout(() => {
+        try {
+            localStorage.setItem('resume_' + window.resume_id, JSON.stringify(payload));
+            btn.disabled = false;
+            btn.textContent = window.is_admin_mode ? "Simpan (Admin)" : "Simpan Data";
+            alert(window.is_admin_mode ? "Resume berjaya disimpan oleh Admin secara lokal!" : "Resume berjaya disimpan secara lokal!");
+        } catch (error) {
+            btn.disabled = false;
+            btn.textContent = window.is_admin_mode ? "Simpan (Admin)" : "Simpan Data";
+            console.error("Error saving resume:", error);
+            alert("Ralat menyimpan data ke storan pelayar.");
         }
-    })
-    .catch(error => {
-        btn.disabled = false;
-        btn.textContent = window.is_admin_mode ? "Simpan (Admin)" : "Simpan Data";
-        console.error("Error saving resume:", error);
-        alert("Gagal menghubungi server untuk menyimpan data resume.");
-    });
+    }, 500);
 }
 
 // ==========================================
